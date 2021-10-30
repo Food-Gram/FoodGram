@@ -21,7 +21,7 @@ When food lovers can't find friends or family members to try food with, they can
 - **Story:** Provide a platform of sharing food information from the users and the food stores.
 - **Market:** Any individual could choose to use this app, and to keep it a safe environment, people would be organized into age groups.
 - **Habit:** This app could be used as often or un-often as the user wanted depending on how deep their social life is, and what exactly they’re looking for.
-- **Scope:** 
+- **Scope:** Creating user interfaces, including page viewing the friends’ posts and the food store’s posts, then perhaps add the location feature.
 
 ## Product Spec
 
