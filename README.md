@@ -155,26 +155,139 @@ Optional:
 
 ## Schema 
 ### Models
-#### Post
+
+####  NormalUser
+| Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for the each  normal user
+   | username      | String            | username for login|
+   | password      | String            | password for login
+   | icon          | File              | icon of the user |
+   | email         | String            | email of user |
+   | friendCount   | Number            | number of friends that is in the friend list|
+   | followedCount | Number            | number of food store followed|
+   | createdAt     | DateTime          | date when user account is create (default field) |
+
+#### FoodStoreUser
+| Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for the each food store user
+   | username      | String            | username for login|
+   | password      | String            | password for login|
+   | icon          | File              | icon of the food storeuser |
+   | storeAddress  | String            | address of food store |
+   | phoneNum      | String            | phone number of food store |
+   | firendCount   | Number            | number of friends that is in the friend list|
+   | followerCount | Number            | number of follower|
+   | rating        | Number            | rating of food store|
+   | createdAt     | DateTime          | date when user account is create (default field) |
+   
+   
+#### NormalUserPost
 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String            | unique id for the user post (default field) |
-   | author        | Pointer to User   | image author |
+   | author        | Pointer to NormalUser   | post's author |
    | image         | File              | image that user posts |
-   | caption       | String            | image caption by author |
+   | description   | String            | description add to each post |
    | commentsCount | Number            | number of comments that has been posted to an image |
    | likesCount    | Number            | number of likes for the post |
    | createdAt     | DateTime          | date when post is created (default field) |
    | updatedAt     | DateTime          | date when post is last updated (default field) |
+   
+#### FoodStorePost
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for the user post (default field) |
+   | author        | Pointer to FoodStoreUser   | post's author |
+   | image         | File              | image that user posts |
+   | description   | String            | description add to each post |
+   | commentsCount | Number            | number of comments that has been posted to an image |
+   | likesCount    | Number            | number of likes for the post |
+   | shareCount    | Number            | number of times each post have been share |
+   | createdAt     | DateTime          | date when post is created (default field) |
+   | updatedAt     | DateTime          | date when post is last updated (default field) |
+
+#### FoodStoreMenu
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for the menu (default field) |
+   | store         | Pointer to FoodStoreUser   | menu's store |
+   | foodImage     | File              | food image in menu |
+   | foodName      | String            | name of the food |
+   | price         | Number            | price of the food |
+   | rating        | Number            | rating of the food |
+   | createdAt     | DateTime          | date when a food is add to menu(default field) |
+   | updatedAt     | DateTime          | date when menu is last updated (default field) |
+   
+#### FriendRequest
+| Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for the each friend request
+   | senderUsername| String            | username for sender|
+   | receiverUsername| String          | username for receiver|
+   | createdAt     | DateTime          | date when friend request is create (default field) |
+   | status        | Number            | Indicate whether a friend request is in progress/accepted/decline |
+   
+#### Follow
+| Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for the each follow|
+   | Username      | String            | username for follower|
+   | followUsername| Point to FoodStoreUser| username for followed food store|
+   | createdAt     | DateTime          | date when a store is followed by a user (default field) |
+   | status        | Number            | Indicate whether a friend request is in progress/accepted/decline |
+
+#### Chat
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for the  (default field) |
+   | sender        | String            | message sender|
+   | receiver      | String            | message receiver |
+   | message       | String            | message sent |
+   | sendAt        | DateTime          | date when message is sent(default field) |
+   
+
+
+**Optional stories models**
+#### Dining invitation
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for the dinning invitation (default field) |
+   | inviter       | Pointer to NormalUser| inviter of a dinning invitation|
+   | description   | String            | description add in invertaion |
+   | requirement   | String            | requirements in a dinning invitation |
+   | inviterCount  | Number            | number of people in inviter side |
+   | peopleCount   | Number            | number of people want to invite|
+   | createdAt     | DateTime          | date when invitation is created (default field) |
+   | status        | Number            | Indicate whether a invitation is in progress or completed|
+   | accepter      | Pointer to NormalUser| accepter of a dinning invitation|
+   
+
+#### Notification
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for each notification (default field) |
+   | receiver      | Point to NormalUser| notification receiver |
+   | detail        | String            | notification detail |
+   | crearedAt     | DateTime          | date when notification is created(default field) |
 
 ### Networking
 #### List of network requests by screen
-   - Home Feed Screen
-      - (Read/GET) Query all posts where user is author
+
+**Normal Users:**
+
+   - Normal User main page
+      - (Read/GET) Query all followed food store posts 
          ```swift
-         let query = PFQuery(className:"Post")
-         query.whereKey("author", equalTo: currentUser)
+         let query = PFQuery(className:"FoodStorePost")
+         query.whereKey("author", in follower)
          query.order(byDescending: "createdAt")
          query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
             if let error = error { 
@@ -185,26 +298,208 @@ Optional:
             }
          }
          ```
-      - (Create/POST) Create a new like on a post
-      - (Delete) Delete existing like
-      - (Create/POST) Create a new comment on a post
-      - (Delete) Delete existing comment
-   - Create Post Screen
-      - (Create/POST) Create a new post object
-   - Profile Screen
-      - (Read/GET) Query logged in user object
-      - (Update/PUT) Update user profile image
+     - (Create/POST) Create a new like on a post
+     - (Delete) Delete existing like
+     - (Create/POST) Create a new comment on a post
+     - (Delete) Delete existing comment 
+
+
+   - Normal User second Screen
+      - (Read/GET) Query all friend’s posts 
+         ```swift
+         let query = PFQuery(className:"friends_posts")
+         query.whereKey("author", in friend)
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else if let posts = posts {
+               print("Successfully retrieved \(posts.count) posts.")
+           // TODO: Do something with posts...
+            }
+         }
+         ```
+     - (Create/POST) Create a new post object
+     - (Create/POST) Create a new like on a post
+     - (Delete) Delete existing like
+     - (Create/POST) Create a new comment on a post
+     - (Delete) Delete existing comment
+
+   - Normal User thrid Screen (optional stoies)
+     - (Create/POST) Create a new invatation
+     - (Delete) Delete existing invation
+     - (Update/PUT) Update when other user accepted invitation
+   
+   
+   
+   - Normal User fourth Screen
+     - (Read/GET) Query all text message where reciever is currentUser
+         ```swift
+         let query = PFQuery(className:"Chats")
+         query.whereKey("reciever", equalTo: currentUser)
+         query.whereKey("sender", in friend)
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (messages: [PFObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else {
+               print("Successfully retrieved \(messages.count) messages.")
+           // TODO: Do something with messages...
+            }
+         }
+        ```
+     - (Create/POST) Create a new Chat with user in friendlist
+     - (Delete) Delete existing chat
+
+     
+     
+ - Normal User fifth Screen
+     - (Read/GET) Query all users in friend list of current user
+         ```swift
+         let query = PFQuery(className:"FriendRequest")
+         query.whereKey("senderUsername" or "receiverUsername", equalTo: currentUser)
+        // status: 0 = pending, 1 = accepted, 2= decline
+         query.whereKey("status" , equalTo:  1)
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (friends: [FRObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else {
+               print("Successfully retrieved \(friends.count) friends.")
+           // TODO: Do something with friends...
+            }
+         }
+        ```
+        
+    - (Read/GET) Query all posts created by currentUser
+        ```swift
+         let query = PFQuery(className:"NormalUserPost")
+         query.whereKey("author", equalTo: currentUser)
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else if let posts = posts {
+               print("Successfully retrieved \(posts.count) posts.")
+           // TODO: Do something with posts...
+            }
+         }
+        ```         
+    * (Create/POST) Create a new like on a post
+    * (Delete) Delete existing like
+    * (Delete) Delete existing comment
+    * (Delete) Delete existing posts
+    * (Update/PUT) Update user profile image
+    * (Create/POST) Create a new comment on a post
+
+**Food Store Users:**
+
+   - Food Store User main page
+      - (Read/GET) Query all followed food store posts 
+         ```swift
+         let query = PFQuery(className:"FoodStorePost")
+         query.whereKey("author", in follower)
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else if let posts = posts {
+               print("Successfully retrieved \(posts.count) posts.")
+           // TODO: Do something with posts...
+            }
+         }
+         ```
+     - (Create/POST) Create a new post object
+     - (Create/POST) Create a new like on a post
+     - (Delete) Delete existing like
+     - (Create/POST) Create a new comment on a post
+     - (Delete) Delete existing comment 
+
+   - Food Store User second Screen
+      - (Read/GET) Query all friend’s posts 
+         ```swift
+         let query = PFQuery(className:"friends_posts")
+         query.whereKey("author", in friend)
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else if let posts = posts {
+               print("Successfully retrieved \(posts.count) posts.")
+           // TODO: Do something with posts...
+            }
+         }
+         ```
+     - (Create/POST) Create a new like on a post
+     - (Delete) Delete existing like
+     - (Create/POST) Create a new comment on a post
+     - (Delete) Delete existing comment
+
+  
+   
+   - Food Store User third Screen
+     - (Read/GET) Query all text message where reciever is currentUser
+         ```swift
+         let query = PFQuery(className:"Chats")
+         query.whereKey("reciever", equalTo: currentUser)
+         query.whereKey("sender", in friend)
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (messages: [PFObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else {
+               print("Successfully retrieved \(messages.count) messages.")
+           // TODO: Do something with messages...
+            }
+         }
+        ```
+     - (Create/POST) Create a new Chat with user in friendlist
+     - (Delete) Delete existing chat
+
+     
+     
+ - Food Store User fourth Screen
+     - (Read/GET) Query list of menu of current food store
+         ```swift
+         let query = PFQuery(className:"FoodStoreMenu")
+         query.whereKey("store", equalTo: currentFoodStore)
+        // status: 0 = pending, 1 = accepted, 2= decline
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (menu: [Object]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else {
+               print("Successfully retrieved \(menu.count) menu.")
+           // TODO: Do something with menu
+            }
+         }
+        ```
+        
+    - (Read/GET) Query all posts created by currentUser
+        ```swift
+         let query = PFQuery(className:"NormalUserPost")
+         query.whereKey("author", equalTo: currentUser)
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else if let posts = posts {
+               print("Successfully retrieved \(posts.count) posts.")
+           // TODO: Do something with posts...
+            }
+         }
+        ```  
+    * (Create/POST) Create a new like on a post
+    * (Delete) Delete existing like
+    * (Delete) Delete existing comment
+    * (Delete) Delete existing posts
+    * (Update/PUT) Update user profile image
+    * (Create/POST) Create a new comment on a post
+    
+    
       
 #### [OPTIONAL:] Existing API Endpoints
 ##### first API
-- Base URL - [api url]()
-
-   HTTP Verb | Endpoint | Description
-   ----------|----------|------------
-    `GET`    | 
-    `GET`    | 
-
-##### second API
 - Base URL - [api url]()
 
    HTTP Verb | Endpoint | Description
