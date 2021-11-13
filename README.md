@@ -156,39 +156,27 @@ Optional:
 ## Schema 
 ### Models
 
-####  NormalUser
+####  User
 | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String            | unique id for the each  normal user
+   | type          | String            | Indicate user type|
    | username      | String            | username for login|
    | password      | String            | password for login
    | icon          | File              | icon of the user |
    | email         | String            | email of user |
-   | friendCount   | Number            | number of friends that is in the friend list|
-   | followedCount | Number            | number of food store followed|
-   | createdAt     | DateTime          | date when user account is create (default field) |
-
-#### FoodStoreUser
-| Property      | Type     | Description |
-   | ------------- | -------- | ------------|
-   | objectId      | String            | unique id for the each food store user
-   | username      | String            | username for login|
-   | password      | String            | password for login|
-   | icon          | File              | icon of the food storeuser |
    | storeAddress  | String            | address of food store |
    | phoneNum      | String            | phone number of food store |
-   | firendCount   | Number            | number of friends that is in the friend list|
-   | followerCount | Number            | number of follower|
    | rating        | Number            | rating of food store|
    | createdAt     | DateTime          | date when user account is create (default field) |
-   
-   
-#### NormalUserPost
+
+  
+#### UserPosts
 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String            | unique id for the user post (default field) |
-   | author        | Pointer to NormalUser   | post's author |
+   | author        | Pointer to User   | post's author |
    | image         | File              | image that user posts |
    | description   | String            | description add to each post |
    | commentsCount | Number            | number of comments that has been posted to an image |
@@ -201,7 +189,7 @@ Optional:
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String            | unique id for the user post (default field) |
-   | author        | Pointer to FoodStoreUser   | post's author |
+   | author        | Pointer to User   | post's author |
    | image         | File              | image that user posts |
    | description   | String            | description add to each post |
    | commentsCount | Number            | number of comments that has been posted to an image |
@@ -215,11 +203,21 @@ Optional:
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String            | unique id for the menu (default field) |
-   | store         | Pointer to FoodStoreUser   | menu's store |
+   | store         | Point to User     | menu's store |
    | foodImage     | File              | food image in menu |
    | foodName      | String            | name of the food |
    | price         | Number            | price of the food |
-   | rating        | Number            | rating of the food |
+   | createdAt     | DateTime          | date when a food is add to menu(default field) |
+   | updatedAt     | DateTime          | date when menu is last updated (default field) |
+ 
+#### Rating
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String            | unique id for the menu (default field) |
+   | username      | Point to User     | user who is rating |
+   | FoodStore     | Point to User     | food store |
+   | rating        | Number            | rating number provide by user|
    | createdAt     | DateTime          | date when a food is add to menu(default field) |
    | updatedAt     | DateTime          | date when menu is last updated (default field) |
    
@@ -227,8 +225,8 @@ Optional:
 | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String            | unique id for the each friend request
-   | senderUsername| String            | username for sender|
-   | receiverUsername| String          | username for receiver|
+   | senderUsername| Point to User     | username for sender|
+   | receiverUsername| Point to User   | username for receiver|
    | createdAt     | DateTime          | date when friend request is create (default field) |
    | status        | Number            | Indicate whether a friend request is in progress/accepted/decline |
    
@@ -236,20 +234,19 @@ Optional:
 | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String            | unique id for the each follow|
-   | Username      | String            | username for follower|
-   | followUsername| Point to FoodStoreUser| username for followed food store|
+   | Username      | Point to User     | username for follower|
+   | followFoodStore| Point to User     | username for followed food store|
    | createdAt     | DateTime          | date when a store is followed by a user (default field) |
-   | status        | Number            | Indicate whether a friend request is in progress/accepted/decline |
 
 #### Chat
 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String            | unique id for the  (default field) |
-   | sender        | String            | message sender|
-   | receiver      | String            | message receiver |
+   | sender        | Point to User     | message sender|
+   | receiver      | Point to User      | message receiver |
    | message       | String            | message sent |
-   | sendAt        | DateTime          | date when message is sent(default field) |
+   | createdAt     | DateTime          | date when message is sent(default field) |
    
 
 
