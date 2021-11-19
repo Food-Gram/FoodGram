@@ -54,6 +54,14 @@ When food lovers can't find friends or family members to try food with, they can
 * The invitation creator is able to cancel or start the team meeting. 
     * Starting the team meeting, the system will add all people on the team to a group chat.
 
+## Build Sprint 1 Video Walkthrough
+
+Here's a walkthrough of implemented user stories:
+
+<img src='https://github.com/Food-Gram/FoodGram/blob/main/walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 ### 2. Screen Archetypes
 
 **All Users:**
