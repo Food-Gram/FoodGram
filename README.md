@@ -31,7 +31,7 @@ When food lovers can't find friends or family members to try food with, they can
 **Required Must-have Stories**
 
 * Users sign up as a normal user or a food store （Two types of user）.
-* Normal User logs in to access friend list, previous chats, and list of following food stores.
+- [x] Normal User logs in to access friend list, previous chats, and list of following food stores.
 * Normal User follow what they are interested in.
 * Users who are friends have a chat window to communicate.
 * Each normal user has a profile page which shows the posts submitted. Friends can thums up or add comments on each post.
@@ -57,7 +57,7 @@ When food lovers can't find friends or family members to try food with, they can
 ### 2. Screen Archetypes
 
 **All Users:**
-* Login
+- [x] Login
 * Register - User signs up or logs into their account
    * Upon Download/Reopening of the application, the user is prompted to log in to gain access to their profile information to be properly matched with another person.
    * Users will choose to sign up as normal users or food store users.
@@ -120,7 +120,7 @@ When food lovers can't find friends or family members to try food with, they can
 * Food Store post page
 * Friends' posts page
 * Message page
-*  Profile
+* Profile
 * Music selection
 * Settings
 
