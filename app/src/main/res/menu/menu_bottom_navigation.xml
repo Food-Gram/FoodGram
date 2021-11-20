@@ -3,10 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_feed"
-        android:icon="@drawable/selector_feed"
+        android:id="@+id/action_friends"
+        android:icon="@drawable/selector_friends"
         android:tint="@android:color/black"
-        android:title="Feed"
+        android:title="Friends"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_stores"
+        android:icon="@drawable/selector_stores"
+        android:tint="@android:color/black"
+        android:title="Stores"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_chat"
@@ -19,11 +25,5 @@
         android:icon="@drawable/selector_profile"
         android:tint="@android:color/black"
         android:title="Profile"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_store"
-        android:icon="@drawable/selector_store"
-        android:tint="@android:color/black"
-        android:title="Store"
         app:showAsAction="always" />
 </menu>
