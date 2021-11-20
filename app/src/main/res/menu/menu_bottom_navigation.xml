@@ -15,6 +15,11 @@
         android:title="Chat"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_compose"
+        android:icon="@drawable/add"
+        android:title="Compose"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_profile"
         android:icon="@drawable/selector_profile"
         android:tint="@android:color/black"

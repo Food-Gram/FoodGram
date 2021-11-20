@@ -13,6 +13,7 @@ import com.codepath.foodgram.fragments.ChatFragment;
 import com.codepath.foodgram.fragments.FeedFragment;
 import com.codepath.foodgram.fragments.ProfileFragment;
 import com.codepath.foodgram.fragments.StoreFragment;
+import com.codepath.foodgram.fragments.UserComposeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.parse.ParseUser;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem feed = menu.findItem(R.id.action_feed);
         MenuItem profile = menu.findItem(R.id.action_profile);
         MenuItem store = menu.findItem(R.id.action_store);
+        MenuItem compose = menu.findItem(R.id.action_compose);
 
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_feed:
                         fragment = new FeedFragment();
+                        break;
+                    case R.id.action_compose:
+                        fragment = new UserComposeFragment();
                         break;
                     case R.id.action_profile:
                         fragment = new ProfileFragment();
@@ -63,12 +68,14 @@ public class MainActivity extends AppCompatActivity {
         // Set default selection
         if (currentUser.getString("type").equals("FoodStore")) { // Food store logged in
             feed.setVisible(false);
+            compose.setVisible(true);
             profile.setVisible(false);
             store.setVisible(true);
             bottomNavigation.setSelectedItemId(R.id.action_store);
         }
         else { // Normal user logged in
             feed.setVisible(true);
+            compose.setVisible(true);
             profile.setVisible(true);
             store.setVisible(false);
             bottomNavigation.setSelectedItemId(R.id.action_feed);

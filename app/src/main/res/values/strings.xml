@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FoodGram</string>
+    <string name="description" />
 </resources>
