@@ -5,21 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.StoreFragment">
+    tools:context=".fragments.StoresFragment">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Food Store Fragment" />
+        android:text="Food Stores Feed" />
 
-    <Button
-        android:id="@+id/btnLogoutStore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Log Out" />
 </RelativeLayout>
