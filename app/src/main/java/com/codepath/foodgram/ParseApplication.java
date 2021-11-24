@@ -1,6 +1,8 @@
 package com.codepath.foodgram;
 
 import android.app.Application;
+
+import com.codepath.foodgram.models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -11,7 +13,7 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         // Register your Parse models
-//        ParseObject.registerSubclass(Post.class);
+        ParseObject.registerSubclass(Post.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("ZdOgcA47mjusdkhurFZbGioYSxewwoyWTawOU95K")

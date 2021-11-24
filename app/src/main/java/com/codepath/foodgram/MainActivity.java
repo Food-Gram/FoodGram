@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.foodgram.fragments.ChatFragment;
+import com.codepath.foodgram.fragments.CreateFragment;
 import com.codepath.foodgram.fragments.FriendsFragment;
 import com.codepath.foodgram.fragments.ProfileFragment;
 import com.codepath.foodgram.fragments.StoresFragment;
@@ -42,11 +42,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_stores:
                         fragment = new StoresFragment();
                         break;
-                    case R.id.action_profile:
-                        fragment = new ProfileFragment();
+                    case R.id.action_chat:
+                        fragment = new ChatFragment();
+                        break;
+                    case R.id.action_create:
+                        fragment = new CreateFragment();
                         break;
                     default:
-                        fragment = new ChatFragment();
+                        fragment = new ProfileFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();

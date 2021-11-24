@@ -15,6 +15,12 @@
         android:title="Stores"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_create"
+        android:icon="@drawable/selector_create"
+        android:tint="@android:color/black"
+        android:title="Create"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_chat"
         android:icon="@drawable/selector_chat"
         android:tint="@android:color/black"
