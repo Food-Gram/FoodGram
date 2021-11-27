@@ -54,7 +54,7 @@ When food lovers can't find friends or family members to try food with, they can
 * The invitation creator is able to cancel or start the team meeting. 
     * Starting the team meeting, the system will add all people on the team to a group chat.
 
-## Build Sprint 1 Video Walkthrough
+## Build Sprint 2 Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
