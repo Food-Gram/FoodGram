@@ -1,14 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.StoreProfileFragment">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    tools:context=".fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@+id/StoreprofileNavigation"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp">
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvStoreProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="90dp" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/StoreprofileNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/ratingBar"
+        android:layout_marginTop="5dp"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/profile_navigation" />
+
+    <FrameLayout
+        android:id="@+id/StoreprofilefContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/StoreprofileNavigation" />
+
+    <TextView
+        android:id="@+id/tvStorePostNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStorePost_profile"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/ivStoreUserIcon"
+        android:text="Posts: 0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvStorePost_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toEndOf="@+id/ivStoreUserIcon"
+        android:text="username"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/ivStoreUserIcon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_baseline_person_24" />
+
+    <TextView
+        android:id="@+id/tvStoreFollower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStorePostNum"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/ivStoreUserIcon"
+        android:text="Follower : 0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvStoreFriendNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStorePostNum"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/tvStoreFollower"
+        android:text="Friends : 0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPhoneNum"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="Address : Street, City, States"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvPhoneNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStoreFollower"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Phone:111-222-3333"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAddress"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:numStars="10"
+        android:progressTint="#7CC3E3"
+        android:rating="8.5" />
+
+
+</RelativeLayout>

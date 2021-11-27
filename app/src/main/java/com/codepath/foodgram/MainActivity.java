@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Set default selection
         if (currentUser.getString("type").equals("FoodStore")) // Food store logged in
-            bottomNavigation.setSelectedItemId(R.id.action_profile);
+            bottomNavigation.setSelectedItemId(R.id.action_friends);
         else // Normal user logged in
-            bottomNavigation.setSelectedItemId(R.id.action_profile);
+            bottomNavigation.setSelectedItemId(R.id.action_friends);
 
 
         // Action Bar

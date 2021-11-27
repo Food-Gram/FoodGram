@@ -1,5 +1,6 @@
 package com.codepath.foodgram.adapters;
 
+import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Post;
 import com.codepath.foodgram.R;
 import android.content.Context;
@@ -23,6 +24,8 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+
 import java.util.List;
 
 import java.util.List;
@@ -30,12 +33,15 @@ import java.util.List;
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder>{
     private Context context;
     private List<Post> posts;
+    private List<FoodStorePost> storePosts;
 
 
-    public ProfileAdapter(Context context, List<Post>posts){
+    public ProfileAdapter(Context context, List<Post>posts, List<FoodStorePost> foodStoreposts){
         this.context = context;
         this.posts = posts;
+        this.storePosts = foodStoreposts;
     }
+
 
     @NonNull
     @Override
@@ -46,18 +52,34 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, int position) {
-        Post post = posts.get(position);
-        holder.bind(post, position);
+        if(posts == null){
+            FoodStorePost post = storePosts.get(position);
+            holder.bind(null,post, position);
+        }else{
+            Post post = posts.get(position);
+            holder.bind(post,null, position);
+        }
+
+
 
     }
     public void clear() {
-        posts.clear();
+        if(posts == null){
+            storePosts.clear();
+        }else{
+            posts.clear();
+        }
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        if(posts == null){
+            return storePosts.size();
+        }else{
+            return posts.size();
+        }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -69,6 +91,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private TextView tvLike;
         private TextView tvComments;
 
+        private ParseFile image;
         /*
         private ImageButton ibShare;
         private ImageButton ibLike;
@@ -92,19 +115,35 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             */
 
         }
-        public void bind (Post post, int position){
+        public void bind (Post post, FoodStorePost storePost, int position){
 
-            tvDescription_user.setText(post.getDescription());
-            int currentPosition = getItemCount() - position;
-            tvPost.setText("Post: "+ currentPosition);
-            tvPostTime.setText(post.getUpdatedAt().toString());
-            tvLike.setText(post.getLike());
-            tvComments.setText(post.getCommentCount());
+            if(posts == null) {
+                tvDescription_user.setText(storePost.getDescription());
+                int currentPosition = getItemCount() - position;
+                tvPost.setText("Post: " + currentPosition);
+                tvPostTime.setText(storePost.getUpdatedAt().toString());
+                tvLike.setText(String.valueOf(storePost.getLike()));
+                tvComments.setText(String.valueOf(storePost.getCommentCount()));
 
-            ParseFile image = post.getImage();
-            if(image != null) {
-                Glide.with(context).load(image.getUrl()).into(ivImage_user);
+                image = storePost.getImage();
+                if (image != null) {
+                    Glide.with(context).load(image.getUrl()).into(ivImage_user);
+                }
+            } else {
+                tvDescription_user.setText(post.getDescription());
+                int currentPosition1 = getItemCount() - position;
+                tvPost.setText("Post: " + currentPosition1);
+                tvPostTime.setText(post.getUpdatedAt().toString());
+                tvLike.setText(String.valueOf(post.getLike()));
+                tvComments.setText(String.valueOf(post.getCommentCount()));
+
+                image = post.getImage();
+                if (image != null) {
+                    Glide.with(context).load(image.getUrl()).into(ivImage_user);
+                }
             }
+        }
+
 
             /*
             container.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +157,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 }
             });
             */
-        }
+
     }
 }

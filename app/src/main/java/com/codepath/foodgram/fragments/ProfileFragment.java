@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -22,7 +22,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.foodgram.R;
+import com.codepath.foodgram.adapters.ImageAdapter;
 import com.codepath.foodgram.adapters.ProfileAdapter;
+import com.codepath.foodgram.models.Followed;
+import com.codepath.foodgram.models.Friend;
 import com.codepath.foodgram.models.Post;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -45,18 +48,13 @@ public class ProfileFragment extends Fragment {
     private TextView tvFollowed;
     private RecyclerView rvProfile;
 
-    private MenuItem gridPost;
-    private MenuItem storeMenu;
-    private MenuItem postsHistory;
-
     private SwipeRefreshLayout swipeContainer;
     private static int position = 0;
 
-
     private ProfileAdapter adapter;
+    private ImageAdapter Iadapter;
     private List<Post> allposts;
 
-    //final FragmentManager fragmentManager = getChildFragmentManager();
     private BottomNavigationView profileNavigation;
 
 
@@ -82,91 +80,88 @@ public class ProfileFragment extends Fragment {
         rvProfile = view.findViewById(R.id.rvProfile);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 
-
-
+        // Basic information of current user
         ParseUser currentUser = ParseUser.getCurrentUser();
         tvUsername.setText(currentUser.getUsername());
         Glide.with(getContext()).load(currentUser.getParseFile("icon").getUrl())
                 .transform(new CenterInside(), new RoundedCorners(100)).into(ivUserIcon);
-
-
-
+        tvFriendNum.setText("Friends : "+ Friend.getFriendNum());
+        tvFollowed.setText("Followed : "+ Followed.getFollowedNum());
 
         // Bottom Navigation
         profileNavigation = view.findViewById(R.id.profileNavigation);
         Menu menu = profileNavigation.getMenu();
-        gridPost = menu.findItem(R.id.action_grid_posts);
-        storeMenu = menu.findItem(R.id.action_menu);
-        postsHistory = menu.findItem(R.id.action_post_history);
+
 
         profileNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                //Fragment fragment = null;
                 switch (item.getItemId()) {
                     case R.id.action_post_history:
-
                         allposts = new ArrayList<>();
-                        adapter = new ProfileAdapter(getContext(), allposts);
+                        adapter = new ProfileAdapter(getContext(), allposts, null);
                         rvProfile.setAdapter(adapter);
-
                         rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                        queryPosts();
-
-                        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                            @Override
-                            public void onRefresh() {
-                                populateHomePosts();
-                            }
-                        });
-
-                        // Configure the refreshing colors
-                        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                                android.R.color.holo_green_light,
-                                android.R.color.holo_orange_light,
-                                android.R.color.holo_red_light);
-
+                        queryPosts("Profile");
+                        refresh("Profile");
                         break;
                     case R.id.action_grid_posts:
-                        break;
-                    case R.id.action_menu:
+                        allposts = new ArrayList<>();
+
+                        Iadapter = new ImageAdapter(getContext(), allposts);
+                        rvProfile.setAdapter(Iadapter);
+                        rvProfile.setLayoutManager(new GridLayoutManager(getContext(),3));
+
+                        queryPosts("Image");
+                        refresh("Image");
                         break;
                 }
-                //fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });
 
-        // Set default selection
-        if (currentUser.getString("type").equals("FoodStore")){ // Food store logged in
-            profileNavigation.setSelectedItemId(R.id.action_menu);
-            gridPost.setVisible(false);
-        }else{ // Normal user logged in
-            profileNavigation.setSelectedItemId(R.id.action_grid_posts);
-            storeMenu.setVisible(false);
-        }
-
-
+        // Default selection
+        profileNavigation.setSelectedItemId(R.id.action_grid_posts);
+        menu.findItem(R.id.action_menu).setVisible(false);
     }
 
-    private void populateHomePosts() {
+    private void refresh(String string){
+        // swipe to refresh
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(string.equals("Profile")) {
+                    adapter.clear();
+                    setPosition(0);
+                    queryPosts("Profile");
+                }else{
+                    Iadapter.clear();
+                    setPosition(0);
+                    queryPosts("Image");
+                }
+                swipeContainer.setRefreshing(false);
+            }
+        });
 
-        adapter.clear();
-        //setPosition(0);
-        queryPosts();
-        swipeContainer.setRefreshing(false);
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
 
-    private void queryPosts() {
+
+    private void queryPosts(String string) {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_AUTHOR);
         query.whereEqualTo(Post.KEY_AUTHOR, ParseUser.getCurrentUser());
-        System.out.println(Post.KEY_AUTHOR + "----" + ParseUser.getCurrentUser());
         // make most recently post show first
         query.addDescendingOrder(Post.KEY_CREATED_KEY);
+
+        if(string.equals("Image")) { query.setLimit(9);}
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
@@ -177,16 +172,20 @@ public class ProfileFragment extends Fragment {
                 for(Post post: posts){
                     Log.i(TAG, "Post:" + post.getDescription() + ", username:" + post.getUser() );
                 }
-                System.out.println(posts);
                 allposts.addAll(posts);
                 tvPostNum.setText("Posts : " + String.valueOf(allposts.size()));
-                adapter.notifyDataSetChanged();
+                
+                if(string.equals("Profile")) {
+                    adapter.notifyDataSetChanged();
+                }else{
+                    Iadapter.notifyDataSetChanged();
+                }
+                
                 rvProfile.smoothScrollToPosition(position);
             }
         });
 
     }
-
 
     public static void setPosition(int pos){
         position = pos;
