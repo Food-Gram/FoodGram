@@ -5,14 +5,19 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-@ParseClassName("UserPosts")
-public class Post extends ParseObject{
+@ParseClassName("FoodStorePost")
+public class FoodStorePost extends ParseObject{
+
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_CREATED_KEY = "createdAt";
     public static final String KEY_LIKE = "likesCount";
     public static final String KEY_COMMENT = "commentsCount";
+
+
+    public static final String KEY_SHARE = "shareCount";
+
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -42,5 +47,7 @@ public class Post extends ParseObject{
         return getInt(KEY_LIKE);}
 
     public int getCommentCount() { return getInt(KEY_COMMENT); }
+
+    public int getShareCount(){return getInt((KEY_SHARE));}
 
 }
