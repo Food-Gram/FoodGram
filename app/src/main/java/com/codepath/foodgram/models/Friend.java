@@ -14,7 +14,7 @@ import java.util.List;
 @ParseClassName("FriendRequest")
 public class Friend extends ParseObject {
 
-    public static final String TAG = "Friend class";
+    public static final String TAG = "Friendclass";
     public static final String KEY_SENDER = "senderUsername";
     public static final String KEY_RECEIVER= "receiverUsername";
     public static final String KEY_STATUS = "status";
@@ -63,6 +63,10 @@ public class Friend extends ParseObject {
                     Log.e(TAG, "Issue with getting friends", e);
                     return;
                 }
+                for(Friend friend: friends){
+                    Log.i(TAG, "Friend:" + friend.getReceiver() );
+
+                }
                 friendNum = friends.size();
             }
         });
@@ -77,7 +81,11 @@ public class Friend extends ParseObject {
                     Log.e(TAG, "Issue with getting friends", e);
                     return;
                 }
+                for(Friend friend: friends){
+                    Log.i(TAG, "Friend:" + friend.getSender() +", Status :"+ friend.getStatus());
+                }
                 friendNum += friends.size();
+
             }
         });
 
