@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodGram">
         <activity
+            android:name=".details.DetailActivity_FriendList"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -24,8 +27,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.FoodGram.NoActionBar"
-            android:exported="true"></activity>
+            android:exported="true"
+            android:theme="@style/Theme.FoodGram.NoActionBar" />
     </application>
 
 </manifest>

@@ -13,7 +13,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/StoreprofileNavigation"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="2dp"
+        android:background="#66FFFFFF">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvStoreProfile"
@@ -30,27 +31,36 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/ratingBar"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/profile_navigation" />
 
-    <FrameLayout
-        android:id="@+id/StoreprofilefContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/StoreprofileNavigation" />
-
     <TextView
         android:id="@+id/tvStorePostNum"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvStorePost_profile"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivStoreUserIcon"
         android:text="Posts: 0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvStoreMenuNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStorePost_profile"
+        android:layout_alignBottom="@+id/tvStorePostNum"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/ivStoreUserIcon"
+        android:text="Menus: 0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp" />
+
 
     <TextView
         android:id="@+id/tvStorePost_profile"
@@ -80,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvStorePostNum"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivStoreUserIcon"
         android:text="Follower : 0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -91,9 +101,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvStorePostNum"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvStoreFollower"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivStoreUserIcon"
         android:text="Friends : 0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp" />
@@ -105,9 +115,9 @@
         android:layout_below="@+id/tvPhoneNum"
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginTop="5dp"
         android:text="Address : Street, City, States"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp" />
 
     <TextView
@@ -117,7 +127,7 @@
         android:layout_below="@+id/tvStoreFollower"
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Phone:111-222-3333"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp" />
@@ -130,7 +140,7 @@
         android:layout_below="@+id/tvAddress"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:numStars="10"
         android:progressTint="#7CC3E3"

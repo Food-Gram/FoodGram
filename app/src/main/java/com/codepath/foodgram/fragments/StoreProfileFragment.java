@@ -1,5 +1,6 @@
 package com.codepath.foodgram.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,28 +12,30 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.codepath.foodgram.details.DetailActivity_FriendList;
 import com.codepath.foodgram.R;
-import com.codepath.foodgram.adapters.ImageAdapter;
+import com.codepath.foodgram.adapters.MenuAdapter;
 import com.codepath.foodgram.adapters.ProfileAdapter;
 import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Friend;
-import com.codepath.foodgram.models.Post;
+import com.codepath.foodgram.models.StoreMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -49,6 +52,8 @@ public class StoreProfileFragment extends Fragment {
     private TextView tvFollower;
     private TextView tvPhoneNum;
     private TextView tvAddress;
+    private TextView tvMenuNum;
+    private RatingBar rating;
     private RecyclerView rvProfile;
 
 
@@ -57,8 +62,9 @@ public class StoreProfileFragment extends Fragment {
     private static int position = 0;
 
     private ProfileAdapter adapter;
-    private ImageAdapter Iadapter;
+    private MenuAdapter Iadapter;
     private List<FoodStorePost> allposts;
+    private List<StoreMenu> allmenus;
 
     private BottomNavigationView profileNavigation;
 
@@ -85,6 +91,8 @@ public class StoreProfileFragment extends Fragment {
         tvPhoneNum = view.findViewById(R.id.tvPhoneNum);
         tvAddress = view.findViewById(R.id.tvAddress);
         rvProfile = view.findViewById(R.id.rvStoreProfile);
+        tvMenuNum = view.findViewById(R.id.tvStoreMenuNum);
+        rating = view.findViewById(R.id.ratingBar);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 
         // Basic information of current user
@@ -94,8 +102,10 @@ public class StoreProfileFragment extends Fragment {
                 .transform(new CenterInside(), new RoundedCorners(100)).into(ivUserIcon);
         tvFriendNum.setText("Friends : "+ Friend.getFriendNum());
         tvFollower.setText("Followers : "+ Followed.getFollowerNum());
-        tvAddress.setText("Phone : " + currentUser.getString("storeAddress"));
-        tvPhoneNum.setText("Address : " + currentUser.getString("phoneNum"));
+        tvAddress.setText("Address : " + currentUser.getString("storeAddress"));
+        tvPhoneNum.setText("Phone : " + currentUser.getString("phoneNum"));
+        rating.setRating((float) currentUser.getDouble("rating"));
+
         // Bottom Navigation
         profileNavigation = view.findViewById(R.id.StoreprofileNavigation);
         Menu menu = profileNavigation.getMenu();
@@ -105,29 +115,21 @@ public class StoreProfileFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_post_history:
-                        /*
                         allposts = new ArrayList<>();
                         adapter = new ProfileAdapter(getContext(), null, allposts);
                         rvProfile.setAdapter(adapter);
                         rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                        queryPosts("Profile");
-                        refresh("Profile");
-                        */
+                        queryPosts("posts");
+                        refresh("posts");
                         break;
-                    case R.id.action_menu:
-
-                        /*
-                        allposts = new ArrayList<>();
-
-                        Iadapter = new ImageAdapter(getContext(), allposts);
+                    default :
+                        allmenus = new ArrayList<>();
+                        Iadapter = new MenuAdapter(getContext(), allmenus);
                         rvProfile.setAdapter(Iadapter);
-                        rvProfile.setLayoutManager(new GridLayoutManager(getContext(),3));
-
-                        queryPosts("Image");
+                        rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
+                        queryMenus();
                         refresh("Image");
-                        */
-
+                        queryPosts("1");
                         break;
                 }
                 return true;
@@ -138,6 +140,15 @@ public class StoreProfileFragment extends Fragment {
         profileNavigation.setSelectedItemId(R.id.action_menu);
         menu.findItem(R.id.action_grid_posts).setVisible(false);
 
+        // Friend list detail
+        tvFriendNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), DetailActivity_FriendList.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     private void refresh(String string){
@@ -145,14 +156,14 @@ public class StoreProfileFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(string.equals("Profile")) {
+                if(string.equals("posts")) {
                     adapter.clear();
                     setPosition(0);
-                    queryPosts("Profile");
+                    queryPosts("posts");
                 }else{
                     Iadapter.clear();
                     setPosition(0);
-                    queryPosts("Image");
+                    queryMenus();
                 }
                 swipeContainer.setRefreshing(false);
             }
@@ -165,8 +176,32 @@ public class StoreProfileFragment extends Fragment {
                 android.R.color.holo_red_light);
     }
 
+    // search for menus
+    private void queryMenus() {
+        ParseQuery<StoreMenu> query = new ParseQuery<StoreMenu>(StoreMenu.class);
+        query.whereEqualTo(StoreMenu.KEY_STORE, ParseUser.getCurrentUser());
+        query.addDescendingOrder(StoreMenu.KEY_CREATED_KEY);
 
+        query.findInBackground(new FindCallback<StoreMenu>() {
+            @Override
+            public void done(List<StoreMenu> menus, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                for (StoreMenu menu : menus){
+                    Log.i(TAG, "Menu: " + menu.getFoodName() + ", price: " + menu.getPrice());
+                }
+                allmenus.addAll(menus);
+                tvMenuNum.setText("Menus : " + String.valueOf(allmenus.size()));
+                Iadapter.notifyDataSetChanged();
+                rvProfile.smoothScrollToPosition(position);
+            }
+        });
 
+    }
+
+    // search for posts
     private void queryPosts(String string) {
         ParseQuery<FoodStorePost> query = new ParseQuery<FoodStorePost>(FoodStorePost.class);
         query.include(FoodStorePost.KEY_AUTHOR);
@@ -180,14 +215,16 @@ public class StoreProfileFragment extends Fragment {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
-                allposts.addAll(posts);
-                tvPostNum.setText("Posts : " + String.valueOf(allposts.size()));
-                if(string.equals("Profile")) {
-                    adapter.notifyDataSetChanged();
-                }else{
-                    Iadapter.notifyDataSetChanged();
+                for (FoodStorePost post : posts) {
+                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
 
+                if(string.equals("posts")) {
+                    allposts.addAll(posts);
+                    adapter.notifyDataSetChanged();
+                }
+
+                tvPostNum.setText("Posts : " + String.valueOf(posts.size()));
                 rvProfile.smoothScrollToPosition(position);
             }
         });

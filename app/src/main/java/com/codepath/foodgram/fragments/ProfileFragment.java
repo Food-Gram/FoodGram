@@ -1,5 +1,6 @@
 package com.codepath.foodgram.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.foodgram.R;
 import com.codepath.foodgram.adapters.ImageAdapter;
 import com.codepath.foodgram.adapters.ProfileAdapter;
+import com.codepath.foodgram.details.DetailActivity_FriendList;
 import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.Friend;
 import com.codepath.foodgram.models.Post;
@@ -124,6 +126,15 @@ public class ProfileFragment extends Fragment {
         // Default selection
         profileNavigation.setSelectedItemId(R.id.action_grid_posts);
         menu.findItem(R.id.action_menu).setVisible(false);
+
+        // Friend list detail
+        tvFriendNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), DetailActivity_FriendList.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void refresh(String string){
