@@ -45,8 +45,6 @@ public class DetailActivity_FriendList extends AppCompatActivity {
         ParseQuery<Friend> query1 = ParseQuery.getQuery(Friend.class);
         query1.whereEqualTo(Friend.KEY_SENDER, ParseUser.getCurrentUser());
         query1.whereEqualTo(Friend.KEY_STATUS, 1);
-
-        System.out.println(ParseUser.getCurrentUser().getUsername());
         query1.findInBackground(new FindCallback<Friend>() {
             @Override
             public void done(List<Friend> friends, ParseException e) {
@@ -55,11 +53,9 @@ public class DetailActivity_FriendList extends AppCompatActivity {
                     return;
                 }
                 for(Friend friend: friends){
-                    Log.i(TAG, "Friend:" + friend.getReceiver() );
-                    allfriends.add(friend.getParseUser("recieverUsername"));
+                    Log.i(TAG, "Receiver Friend:" + friend.getParseUser("receiverUsername") +", Status :"+ friend.getStatus());
+                    allfriends.add(friend.getParseUser("receiverUsername"));
                 }
-
-                System.out.println(friends.size());
             }
         });
 
@@ -74,11 +70,11 @@ public class DetailActivity_FriendList extends AppCompatActivity {
                     return;
                 }
                 for(Friend friend: friends){
-                    Log.i(TAG, "Friend:" + friend.getSender() +", Status :"+ friend.getStatus());
+                    Log.i(TAG, "Sender Friend:" + friend.getParseUser("senderUsername") +", Status :"+ friend.getStatus());
                     allfriends.add(friend.getParseUser("senderUsername"));
 
+
                 }
-                System.out.println(friends.size());
                 adapter.notifyDataSetChanged();
             }
         });

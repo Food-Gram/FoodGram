@@ -15,11 +15,16 @@ import java.util.List;
 public class Friend extends ParseObject {
 
     public static final String TAG = "Friendclass";
+    public static final String KEY_OBJECTID = "objectId";
     public static final String KEY_SENDER = "senderUsername";
     public static final String KEY_RECEIVER= "receiverUsername";
     public static final String KEY_STATUS = "status";
     //public static final String KEY_CREATED = "createdAt";
     private static int friendNum;
+
+    public String getObjectId() {
+        return getString(KEY_OBJECTID);
+    }
 
     public String getSender() {
         return getString(KEY_SENDER);
