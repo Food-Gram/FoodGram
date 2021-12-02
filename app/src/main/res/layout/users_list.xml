@@ -24,12 +24,10 @@
 
     <TextView
         android:id="@+id/tvUserListName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="5dp"
         android:layout_toEndOf="@+id/ivUserListIcon"
         android:textColor="#000000"
@@ -41,9 +39,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:text="UnFriend" />
+        android:text="UnFriend"
+        android:textSize="12sp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/bnUnfollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="UnFriend"
+        android:textSize="12sp"
+        android:visibility="invisible" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ivUserListIcon"
+        android:layout_marginTop="1dp"
+        android:background="?android:attr/listDivider"></View>
 
 
 </RelativeLayout>

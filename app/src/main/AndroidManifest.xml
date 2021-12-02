@@ -14,7 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodGram">
         <activity
-            android:name=".details.DetailActivity_FriendList"
+            android:name=".details.DetailActivity_ChangePsw"
+            android:exported="true" />
+        <activity
+            android:name=".details.DetailActivity_PersonalInfo"
+            android:exported="true" />
+        <activity
+            android:name=".details.DetailActivity_OtherStoreProd"
+            android:exported="true" />
+        <activity
+            android:name=".details.DetailActivity_UserList"
+            android:exported="true" />
+        <activity
+            android:name=".details.DetailActivity_OtherUserProf"
             android:exported="true" />
         <activity
             android:name=".LoginActivity"

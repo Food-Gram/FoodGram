@@ -1,34 +1,32 @@
-package com.codepath.foodgram.fragments;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+package com.codepath.foodgram.details;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.foodgram.R;
-import com.codepath.foodgram.adapters.ImageAdapter;
+import com.codepath.foodgram.adapters.MenuAdapter;
 import com.codepath.foodgram.adapters.ProfileAdapter;
-import com.codepath.foodgram.details.DetailActivity_UserList;
 import com.codepath.foodgram.models.Followed;
+import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Friend;
-import com.codepath.foodgram.models.Post;
+import com.codepath.foodgram.models.StoreMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.parse.FindCallback;
@@ -36,65 +34,74 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
+public class DetailActivity_OtherStoreProd extends AppCompatActivity {
 
-public class ProfileFragment extends Fragment {
+    public static final String TAG = "OtherStoreProfile";
 
-    public static final String TAG = "ProfileFragment";
+    private ParseUser user;
     private ImageView ivUserIcon;
     private TextView tvUsername;
     private TextView tvPostNum;
     private TextView tvFriendNum;
-    private TextView tvFollowed;
+    private TextView tvFollower;
+    private TextView tvPhoneNum;
+    private TextView tvAddress;
+    private TextView tvMenuNum;
+    private RatingBar rating;
     private RecyclerView rvProfile;
+    private int friendNum;
 
     private SwipeRefreshLayout swipeContainer;
     private static int position = 0;
-    private int friendNum;
 
     private ProfileAdapter adapter;
-    private ImageAdapter Iadapter;
-    private List<Post> allposts;
+    private MenuAdapter Iadapter;
+    private List<FoodStorePost> allposts;
+    private List<StoreMenu> allmenus;
+    private Context context;
 
     private BottomNavigationView profileNavigation;
 
-
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail_other_store_prod);
+        ivUserIcon = findViewById(R.id.ivStoreUserIcon);
+        tvUsername = findViewById(R.id.tvStorePost_profile);
+        tvPostNum = findViewById(R.id.tvStorePostNum);
+        tvFollower = findViewById(R.id.tvStoreFollower);
+        tvFriendNum = findViewById(R.id.tvStoreFriendNum);
+        tvPhoneNum = findViewById(R.id.tvPhoneNum);
+        tvAddress = findViewById(R.id.tvAddress);
+        rvProfile = findViewById(R.id.rvStoreProfile);
+        tvMenuNum = findViewById(R.id.tvStoreMenuNum);
+        rating = findViewById(R.id.ratingBar);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        context = this;
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ivUserIcon = view.findViewById(R.id.ivUserIcon);
-        tvUsername = view.findViewById(R.id.tvPost_profile);
-        tvPostNum = view.findViewById(R.id.tvPostNum);
-        tvFollowed = view.findViewById(R.id.tvFollowed);
-        tvFriendNum = view.findViewById(R.id.tvFriendNum);
-        rvProfile = view.findViewById(R.id.rvProfile);
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        // Basic information of other user
+        user = Parcels.unwrap(getIntent().getParcelableExtra("user"));
 
-        // Basic information of current user
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        tvUsername.setText(currentUser.getUsername());
-        Glide.with(getContext()).load(currentUser.getParseFile("icon").getUrl())
+        tvUsername.setText(user.getUsername());
+        Glide.with(context).load(user.getParseFile("icon").getUrl())
                 .transform(new CenterInside(), new RoundedCorners(100)).into(ivUserIcon);
+
         queryFriend();
-        queryFollowed();
+        queryFollower();
+
+        tvAddress.setText("Address : " + user.getString("storeAddress"));
+        tvPhoneNum.setText("Phone : " + user.getString("phoneNum"));
+        rating.setRating((float) user.getDouble("rating"));
+
 
         // Bottom Navigation
-        profileNavigation = view.findViewById(R.id.profileNavigation);
+        profileNavigation = findViewById(R.id.StoreprofileNavigation);
         Menu menu = profileNavigation.getMenu();
-
 
         profileNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -102,51 +109,31 @@ public class ProfileFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.action_post_history:
                         allposts = new ArrayList<>();
-                        adapter = new ProfileAdapter(getContext(), allposts, null);
+                        adapter = new ProfileAdapter(context, null, allposts);
                         rvProfile.setAdapter(adapter);
-                        rvProfile.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                        queryPosts("Profile");
-                        refresh("Profile");
+                        rvProfile.setLayoutManager(new LinearLayoutManager(context));
+                        queryPosts("posts");
+                        refresh("posts");
                         break;
-                    case R.id.action_grid_posts:
-                        allposts = new ArrayList<>();
-
-                        Iadapter = new ImageAdapter(getContext(), allposts);
+                    default :
+                        allmenus = new ArrayList<>();
+                        Iadapter = new MenuAdapter(context, allmenus);
                         rvProfile.setAdapter(Iadapter);
-                        rvProfile.setLayoutManager(new GridLayoutManager(getContext(),3));
-
-                        queryPosts("Image");
+                        rvProfile.setLayoutManager(new LinearLayoutManager(context));
+                        queryMenus();
                         refresh("Image");
+                        queryPosts("1");
                         break;
                 }
                 return true;
             }
         });
 
-        // Default selection
-        profileNavigation.setSelectedItemId(R.id.action_grid_posts);
-        menu.findItem(R.id.action_menu).setVisible(false);
+        //default selection
+        profileNavigation.setSelectedItemId(R.id.action_menu);
+        menu.findItem(R.id.action_grid_posts).setVisible(false);
 
-        // Friend list detail
-        tvFriendNum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getContext(), DetailActivity_UserList.class);
-                i.putExtra("type", "Friend");
-                startActivity(i);
-            }
-        });
 
-        //Followed list detail
-        tvFollowed.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent i = new Intent(getContext(), DetailActivity_UserList.class);
-                i.putExtra("type", "Followed");
-                startActivity(i);
-            }
-        });
     }
 
     private void refresh(String string){
@@ -154,14 +141,14 @@ public class ProfileFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(string.equals("Profile")) {
+                if(string.equals("posts")) {
                     adapter.clear();
                     setPosition(0);
-                    queryPosts("Profile");
+                    queryPosts("posts");
                 }else{
                     Iadapter.clear();
                     setPosition(0);
-                    queryPosts("Image");
+                    queryMenus();
                 }
                 swipeContainer.setRefreshing(false);
             }
@@ -174,36 +161,55 @@ public class ProfileFragment extends Fragment {
                 android.R.color.holo_red_light);
     }
 
+    // search for menus
+    private void queryMenus() {
+        ParseQuery<StoreMenu> query = new ParseQuery<StoreMenu>(StoreMenu.class);
+        query.whereEqualTo(StoreMenu.KEY_STORE, user);
+        query.addDescendingOrder(StoreMenu.KEY_CREATED_KEY);
 
-
-    private void queryPosts(String string) {
-        // Specify which class to query
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_AUTHOR);
-        query.whereEqualTo(Post.KEY_AUTHOR, ParseUser.getCurrentUser());
-        // make most recently post show first
-        query.addDescendingOrder(Post.KEY_CREATED_KEY);
-
-        if(string.equals("Image")) { query.setLimit(9);}
-        query.findInBackground(new FindCallback<Post>() {
+        query.findInBackground(new FindCallback<StoreMenu>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
+            public void done(List<StoreMenu> menus, ParseException e) {
                 if(e != null){
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
-                for(Post post: posts){
-                    Log.i(TAG, "Post:" + post.getDescription() + ", username:" + post.getUser() );
+                for (StoreMenu menu : menus){
+                    Log.i(TAG, "Menu: " + menu.getFoodName() + ", price: " + menu.getPrice());
                 }
-                allposts.addAll(posts);
-                tvPostNum.setText("Posts : " + String.valueOf(allposts.size()));
-                
-                if(string.equals("Profile")) {
+                allmenus.addAll(menus);
+                tvMenuNum.setText("Menus : " + String.valueOf(allmenus.size()));
+                Iadapter.notifyDataSetChanged();
+                rvProfile.smoothScrollToPosition(position);
+            }
+        });
+
+    }
+
+    // search for posts
+    private void queryPosts(String string) {
+        ParseQuery<FoodStorePost> query = new ParseQuery<FoodStorePost>(FoodStorePost.class);
+        query.include(FoodStorePost.KEY_AUTHOR);
+        query.whereEqualTo(FoodStorePost.KEY_AUTHOR, user);
+        query.addDescendingOrder(FoodStorePost.KEY_CREATED_KEY);
+
+        query.findInBackground(new FindCallback<FoodStorePost>() {
+            @Override
+            public void done(List<FoodStorePost> posts, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                for (FoodStorePost post : posts) {
+                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
+                }
+
+                if(string.equals("posts")) {
+                    allposts.addAll(posts);
                     adapter.notifyDataSetChanged();
-                }else{
-                    Iadapter.notifyDataSetChanged();
                 }
-                
+
+                tvPostNum.setText("Posts : " + String.valueOf(posts.size()));
                 rvProfile.smoothScrollToPosition(position);
             }
         });
@@ -213,7 +219,7 @@ public class ProfileFragment extends Fragment {
     private void queryFriend() {
         // Specify which class to query
         ParseQuery<Friend> query1 = ParseQuery.getQuery(Friend.class);
-        query1.whereEqualTo(Friend.KEY_SENDER, ParseUser.getCurrentUser());
+        query1.whereEqualTo(Friend.KEY_SENDER, user);
         query1.whereEqualTo(Friend.KEY_STATUS, 1);
         query1.addDescendingOrder(Friend.KEY_CREATED_AT);
         query1.findInBackground(new FindCallback<Friend>() {
@@ -231,7 +237,7 @@ public class ProfileFragment extends Fragment {
             }
         });
         ParseQuery<Friend> query2 = ParseQuery.getQuery(Friend.class);
-        query2.whereEqualTo(Friend.KEY_RECEIVER, ParseUser.getCurrentUser());
+        query2.whereEqualTo(Friend.KEY_RECEIVER, user);
         query2.whereEqualTo(Friend.KEY_STATUS, 1);
         query2.addDescendingOrder(Friend.KEY_CREATED_AT);
         query2.findInBackground(new FindCallback<Friend>() {
@@ -250,9 +256,9 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void queryFollowed() {
+    private void queryFollower() {
         ParseQuery<Followed> query = ParseQuery.getQuery(Followed.class);
-        query.whereEqualTo(Followed.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Followed.KEY_FOLLOW, user);
         query.addDescendingOrder(Friend.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Followed>() {
             @Override
@@ -261,7 +267,7 @@ public class ProfileFragment extends Fragment {
                     Log.e(TAG, "Issue with getting followed store", e);
                     return;
                 }
-                tvFollowed.setText("Followed : "+ follow.size());
+                tvFollower.setText("Followed : "+ follow.size());
             }
         });
     }
