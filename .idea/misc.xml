@@ -35,7 +35,13 @@
         <entry key="..\:/AndroidStudioProjects/FoodGram/app/src/main/res/layout/item_post.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/FoodGram/app/src/main/res/layout/item_posts.xml" value="0.275" />
         <entry key="..\:/AndroidStudioProjects/FoodGram/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.275" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/drawable/baseline_account_circle_24.xml" value="0.17083333333333334" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/activity_detail_acitivity_change_psw.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/activity_detail_change_psw.xml" value="0.264" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/activity_detail_friend_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/activity_detail_other_store_prod.xml" value="0.21979166666666666" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/activity_detail_other_user_prof.xml" value="0.20364583333333333" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/activity_detail_personal_info.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/activity_login.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/activity_main2.xml" value="0.25" />
@@ -43,11 +49,14 @@
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/basic_user_info.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/content_main.xml" value="0.25" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_chat.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_friends.xml" value="0.1546875" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_gallery.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_grid_view.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_home.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_notification.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_profileposts.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_setting.xml" value="0.536" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_setting.xml" value="0.264" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_slideshow.xml" value="0.25" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_store_profile.xml" value="0.264" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/fragment_stores.xml" value="0.25416666666666665" />
@@ -57,6 +66,7 @@
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/item_post.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/item_post_user.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/nav_header_main.xml" value="0.4" />
+        <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/layout/users_list.xml" value="0.47368421052631576" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/menu/activity_d1_drawer.xml" value="0.2125" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/menu/activity_main_drawer.xml" value="0.4" />
         <entry key="..\:/Users/yingy/Codepath/FoodGram/app/src/main/res/menu/main.xml" value="0.25" />

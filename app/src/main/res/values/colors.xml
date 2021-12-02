@@ -8,5 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="azure">#F0FFFF</color>
+    <color name="gray">#FFAFABAB</color>
     <color name="blue1">#33B0E5</color>
+    <color name="medium_red">#ffe0245e</color>
 </resources>

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Parcel;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -24,10 +25,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.codepath.foodgram.details.DetailActivity_FriendList;
 import com.codepath.foodgram.R;
 import com.codepath.foodgram.adapters.MenuAdapter;
 import com.codepath.foodgram.adapters.ProfileAdapter;
+import com.codepath.foodgram.details.DetailActivity_UserList;
 import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Friend;
@@ -38,6 +39,8 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +58,7 @@ public class StoreProfileFragment extends Fragment {
     private TextView tvMenuNum;
     private RatingBar rating;
     private RecyclerView rvProfile;
+    private int friendNum;
 
 
 
@@ -100,11 +104,12 @@ public class StoreProfileFragment extends Fragment {
         tvUsername.setText(currentUser.getUsername());
         Glide.with(getContext()).load(currentUser.getParseFile("icon").getUrl())
                 .transform(new CenterInside(), new RoundedCorners(100)).into(ivUserIcon);
-        tvFriendNum.setText("Friends : "+ Friend.getFriendNum());
-        tvFollower.setText("Followers : "+ Followed.getFollowerNum());
+        queryFriend();
+        queryFollower();
         tvAddress.setText("Address : " + currentUser.getString("storeAddress"));
         tvPhoneNum.setText("Phone : " + currentUser.getString("phoneNum"));
         rating.setRating((float) currentUser.getDouble("rating"));
+
 
         // Bottom Navigation
         profileNavigation = view.findViewById(R.id.StoreprofileNavigation);
@@ -144,7 +149,18 @@ public class StoreProfileFragment extends Fragment {
         tvFriendNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), DetailActivity_FriendList.class);
+                Intent i = new Intent(getContext(), DetailActivity_UserList.class);
+                i.putExtra("type", "Friend");
+                startActivity(i);
+            }
+        });
+
+        //Follower list detail
+        tvFollower.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent i = new Intent(getContext(), DetailActivity_UserList.class);
+                i.putExtra("type", "Follower");
                 startActivity(i);
             }
         });
@@ -229,6 +245,62 @@ public class StoreProfileFragment extends Fragment {
             }
         });
 
+    }
+
+    private void queryFriend() {
+        // Specify which class to query
+        ParseQuery<Friend> query1 = ParseQuery.getQuery(Friend.class);
+        query1.whereEqualTo(Friend.KEY_SENDER, ParseUser.getCurrentUser());
+        query1.whereEqualTo(Friend.KEY_STATUS, 1);
+        query1.addDescendingOrder(Friend.KEY_CREATED_AT);
+        query1.findInBackground(new FindCallback<Friend>() {
+            @Override
+            public void done(List<Friend> friends, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with getting friends", e);
+                    return;
+                }
+                for(Friend friend: friends){
+                    Log.i(TAG, "Friend:" + friend.getReceiver() + ", Status :"+ friend.getStatus());
+
+                }
+                friendNum = friends.size();
+            }
+        });
+        ParseQuery<Friend> query2 = ParseQuery.getQuery(Friend.class);
+        query2.whereEqualTo(Friend.KEY_RECEIVER, ParseUser.getCurrentUser());
+        query2.whereEqualTo(Friend.KEY_STATUS, 1);
+        query2.addDescendingOrder(Friend.KEY_CREATED_AT);
+        query2.findInBackground(new FindCallback<Friend>() {
+            @Override
+            public void done(List<Friend> friends, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with getting friends", e);
+                    return;
+                }
+                for(Friend friend: friends){
+                    Log.i(TAG, "Friend:" + friend.getSender() +", Status :"+ friend.getStatus());
+                }
+                friendNum += friends.size();
+                tvFriendNum.setText("Friends : "+ friendNum);
+            }
+        });
+    }
+
+    private void queryFollower() {
+        ParseQuery<Followed> query = ParseQuery.getQuery(Followed.class);
+        query.whereEqualTo(Followed.KEY_FOLLOW, ParseUser.getCurrentUser());
+        query.addDescendingOrder(Friend.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Followed>() {
+            @Override
+            public void done(List<Followed> follow, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with getting followed store", e);
+                    return;
+                }
+                tvFollower.setText("Follower : "+ follow.size());
+            }
+        });
     }
 
     public static void setPosition(int pos){
