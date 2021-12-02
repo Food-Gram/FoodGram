@@ -35,7 +35,8 @@ When food lovers can't find friends or family members to try food with, they can
 * Normal User follow what they are interested in.
 * Users who are friends have a chat window to communicate.
 - [x] Each normal user has a profile page which shows the posts submitted. Friends can thums up or add comments on each post.
-* Each normal user can view the profile of the food store that they followed.
+- [x] Each normal user can view the profile of the food store that they followed.
+- [x] Both type of user can view the profile of the user in their friend list.
 * Food store users log in to edit their profiles, such as edit the food pictures, prices, etc.
 * Settings (Accesibility, Notification, General, etc.)
 
@@ -78,11 +79,12 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
    * Show followed food store posts chronologically. 
    * Each post has the user’s headshot, food picture, created time and some words.
    * Click each post to see the details which include larger pictures, comments.
+   * Click on other's username jump to view other's profile
 * Normal User second page (view friend's posts)
    * Show all friend’s posts chronologically. 
    * Each post has the user’s headshot, food picture, and some words.
    * Click each post to see the details which include larger pictures, comments.
-   * Tap on top right corner of menu bar allow user to create a new post
+   * Click on other's username jump to view other's profile
 * Users third page
    -[x] Compose, including images, description
 * Normal User fourth page
@@ -94,7 +96,10 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     - [x] Shows the user’s headshot icon and username, total number of posts made, number of food stores followed, and number of friends added.
     - [x] Show a grid view of the most recent nine photos
     - [x] Show all posts from the past in recyclerview contain posted time, description.Tap on these posts to show a detailed view.
-    * Show friends and followed list
+    - [x] Show friends and followed list
+    - [x] View other user's profile after click on friend/followed username from friend/followed list
+    - [x] Allow to delete user in friend list
+    - [x] Allow to unfollow a food store
 
 
 **Food Store Users:**
@@ -102,22 +107,27 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     * Show followed food store posts chronologically. 
     * Each post has the user’s headshot, food picture, created time and some words.
     * Click each post to see the details which include larger pictures, comments.
-    * Tap on top right corner of menu bar allow food store user to create a new post
+    * Click on other's username jump to view other's profile
 * Food Store User second page (view friend's posts)
     * Show all friend’s posts chronologically. 
     * Each post has the user’s headshot, food picture, and some words.
     * Click each post to see the details which include larger pictures, comments.
-* Food Store User third page
+    * * Click on other's username jump to view other's profile
+* Food Store third page
+   -[x] Compose, including images, description
+* Food Store User fourth page
     * Show the list of friends, in a recyclerview
     * Each item in recyclerview contains the user’s headshot, username, and the last message sent.
     * Items are ordered chronologically.
     * On the top bar of the page, shows the number of unread messages.
 *  Food Store User fourth page (own profile)
     - [x] Shows the user’s headshot icon and username, total number of posts made, number of followers, and number of friends added.
-    * Show menu in recyclerview contains food image, food name, price
-    * Show all posts from the past in recyclerview contain posted time, description. Tap on these posts to show a detailed view.
-    * Show friends and followed list
-
+    - [x] Show menu in recyclerview contains food image, food name, price
+    - [x] Show all posts from the past in recyclerview contain posted time, description. Tap on these posts to show a detailed view.
+    - [x] Show friends and followed list
+    - [x] View other user's profile after click on friend/follower username from friend/follower list
+    - [x] Allow to delete user in friend list
+    
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
