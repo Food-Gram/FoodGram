@@ -32,6 +32,7 @@ import com.codepath.foodgram.details.DetailActivity_UserList;
 import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Friend;
+import com.codepath.foodgram.models.RateStore;
 import com.codepath.foodgram.models.StoreMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -106,9 +107,9 @@ public class StoreProfileFragment extends Fragment {
                 .transform(new CenterInside(), new RoundedCorners(100)).into(ivUserIcon);
         queryFriend();
         queryFollower();
+        queryRating();
         tvAddress.setText("Address : " + currentUser.getString("storeAddress"));
         tvPhoneNum.setText("Phone : " + currentUser.getString("phoneNum"));
-        rating.setRating((float) currentUser.getDouble("rating"));
 
 
         // Bottom Navigation
@@ -265,6 +266,7 @@ public class StoreProfileFragment extends Fragment {
 
                 }
                 friendNum = friends.size();
+                tvFriendNum.setText("Friends : "+ friendNum);
             }
         });
         ParseQuery<Friend> query2 = ParseQuery.getQuery(Friend.class);
@@ -285,6 +287,7 @@ public class StoreProfileFragment extends Fragment {
                 tvFriendNum.setText("Friends : "+ friendNum);
             }
         });
+
     }
 
     private void queryFollower() {
@@ -299,6 +302,28 @@ public class StoreProfileFragment extends Fragment {
                     return;
                 }
                 tvFollower.setText("Follower : "+ follow.size());
+            }
+        });
+    }
+    private void queryRating() {
+        //Update the final rating for store
+        ParseQuery<RateStore> query = ParseQuery.getQuery(RateStore.class);
+        query.whereEqualTo(RateStore.KEY_STORE,ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<RateStore>() {
+            @Override
+            public void done(List<RateStore> rates, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting rating", e);
+                    return;
+                }
+
+                int sum = 0;
+                for(RateStore rating: rates) {
+                    Log.i(TAG, "Rating:" + rating.getRate());
+                    sum += rating.getRate();
+                }
+                rating.setRating((float) (sum/rates.size()));
+                System.out.println((float)(sum/rates.size()));
             }
         });
     }

@@ -8,10 +8,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.foodgram.fragments.ChatFragment;
 import com.codepath.foodgram.fragments.CreateFragment;
 import com.codepath.foodgram.fragments.FriendsFragment;
+import com.codepath.foodgram.fragments.MenuFragment;
 import com.codepath.foodgram.fragments.NotificationFragment;
 import com.codepath.foodgram.fragments.ProfileFragment;
 import com.codepath.foodgram.fragments.SettingFragment;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView bottomNavigation;
 
     private DrawerLayout drawer;
+    private
     ParseUser currentUser = ParseUser.getCurrentUser();
 
     @Override
@@ -102,6 +106,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         updateUser(navigationView);
+
+
+        Menu menu = navigationView.getMenu();
+        if(ParseUser.getCurrentUser().getString("type").equals("user")) {
+            menu.findItem(R.id.nav_Menu).setVisible(false);
+        }
     }
 
 
@@ -117,8 +127,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // selection on action bar
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.nav_Menu:
+                fragmentManager.beginTransaction().replace(R.id.flContainer,
+                        new MenuFragment()).commit();
+                break;
             case R.id.nav_Notification:
                 fragmentManager.beginTransaction().replace(R.id.flContainer,
                         new NotificationFragment()).commit();

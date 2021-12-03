@@ -6,6 +6,7 @@ import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Friend;
 import com.codepath.foodgram.models.Post;
+import com.codepath.foodgram.models.RateStore;
 import com.codepath.foodgram.models.StoreMenu;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -22,6 +23,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Followed.class);
         ParseObject.registerSubclass(Friend.class);
         ParseObject.registerSubclass(StoreMenu.class);
+        ParseObject.registerSubclass(RateStore.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("ZdOgcA47mjusdkhurFZbGioYSxewwoyWTawOU95K")

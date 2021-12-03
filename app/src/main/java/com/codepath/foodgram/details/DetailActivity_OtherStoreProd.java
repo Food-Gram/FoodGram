@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.codepath.foodgram.adapters.ProfileAdapter;
 import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Friend;
+import com.codepath.foodgram.models.RateStore;
 import com.codepath.foodgram.models.StoreMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -33,6 +35,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -53,6 +56,7 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
     private TextView tvAddress;
     private TextView tvMenuNum;
     private RatingBar rating;
+    private Button giveRate;
     private RecyclerView rvProfile;
     private int friendNum;
 
@@ -81,6 +85,7 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
         rvProfile = findViewById(R.id.rvStoreProfile);
         tvMenuNum = findViewById(R.id.tvStoreMenuNum);
         rating = findViewById(R.id.ratingBar);
+        giveRate = findViewById(R.id.bnRating);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         context = this;
 
@@ -93,11 +98,10 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
 
         queryFriend();
         queryFollower();
+        queryRating();
 
         tvAddress.setText("Address : " + user.getString("storeAddress"));
         tvPhoneNum.setText("Phone : " + user.getString("phoneNum"));
-        rating.setRating((float) user.getDouble("rating"));
-
 
         // Bottom Navigation
         profileNavigation = findViewById(R.id.StoreprofileNavigation);
@@ -134,6 +138,38 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
         menu.findItem(R.id.action_grid_posts).setVisible(false);
 
 
+        giveRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context,DetailActivity_Rating.class);
+                i.putExtra("store", Parcels.wrap(user));
+                startActivity(i);
+            }
+        });
+
+    }
+
+    private void queryRating() {
+        //Update the final rating for store
+        ParseQuery<RateStore> query = ParseQuery.getQuery(RateStore.class);
+        query.whereEqualTo(RateStore.KEY_STORE,user);
+        query.findInBackground(new FindCallback<RateStore>() {
+            @Override
+            public void done(List<RateStore> rates, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting rating", e);
+                    return;
+                }
+
+                int sum = 0;
+                for(RateStore rating: rates) {
+                    Log.i(TAG, "Rating:" + rating.getRate());
+                    sum += rating.getRate();
+                }
+                rating.setRating((float) (sum/rates.size()));
+                System.out.println((float)(sum/rates.size()));
+            }
+        });
     }
 
     private void refresh(String string){
@@ -234,6 +270,7 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
 
                 }
                 friendNum = friends.size();
+                tvFriendNum.setText("Friends : "+ friendNum);
             }
         });
         ParseQuery<Friend> query2 = ParseQuery.getQuery(Friend.class);
