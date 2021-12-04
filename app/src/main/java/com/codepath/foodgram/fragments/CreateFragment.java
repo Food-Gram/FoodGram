@@ -140,9 +140,7 @@ public class CreateFragment extends Fragment {
         Post post = new Post();
         post.setDescription(varDescription);
         post.setUser(user);
-
         post.setImage(new ParseFile(photoFile));
-
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
