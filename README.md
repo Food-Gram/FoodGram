@@ -55,11 +55,11 @@ When food lovers can't find friends or family members to try food with, they can
 * The invitation creator is able to cancel or start the team meeting. 
     * Starting the team meeting, the system will add all people on the team to a group chat.
 
-## Build Sprint 2 Video Walkthrough
+## Build Sprint 3 Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/Food-Gram/FoodGram/blob/main/walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='walkthrough3.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -70,8 +70,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 * Register - User signs up or logs into their account
    * Upon Download/Reopening of the application, the user is prompted to log in to gain access to their profile information to be properly matched with another person.
    * Users will choose to sign up as normal users or food store users.
-* Settings Screen
-    * Lets people change language, and app notification settings.
+- [x] Settings Screen
+    - [x] Lets people change perosnal information and password
     
     
 **Normal Users:**
@@ -112,9 +112,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     * Show all friend’s posts chronologically. 
     * Each post has the user’s headshot, food picture, and some words.
     * Click each post to see the details which include larger pictures, comments.
-    * * Click on other's username jump to view other's profile
+    * Click on other's username jump to view other's profile
 * Food Store third page
-   -[x] Compose, including images, description
+    * Compose, including images, description
 * Food Store User fourth page
     * Show the list of friends, in a recyclerview
     * Each item in recyclerview contains the user’s headshot, username, and the last message sent.
