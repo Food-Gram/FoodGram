@@ -14,4 +14,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="submit">Submit</string>
+    <string name="write_a_caption">Write a caption...</string>
+    <string name="todo">TODO</string>
 </resources>
