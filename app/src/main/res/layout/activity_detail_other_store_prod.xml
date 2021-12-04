@@ -144,7 +144,7 @@
         android:layout_marginEnd="10dp"
         android:numStars="5"
         android:progressTint="#7CC3E3"
-        android:rating="4.5" />
+        android:rating="1" />
 
     <Button
         android:id="@+id/bnRating"

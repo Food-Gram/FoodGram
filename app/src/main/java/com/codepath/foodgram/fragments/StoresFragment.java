@@ -44,8 +44,10 @@ public class StoresFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        /*
         rvPosts = view.findViewById(R.id.rvPosts);
         storePosts = new ArrayList<>();
+
         adapter = new StorePostAdapter(getContext(), storePosts);
 
         // Lookup the swipe container view
@@ -94,5 +96,10 @@ public class StoresFragment extends Fragment {
             }
         });
     }
+
+         */
+    }
+
+
 
 }

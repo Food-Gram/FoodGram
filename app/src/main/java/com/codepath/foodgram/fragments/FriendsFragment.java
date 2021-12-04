@@ -53,6 +53,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.foodgram.R;
 import com.codepath.foodgram.adapters.PostsAdapter;
+import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -124,7 +125,7 @@ public class FriendsFragment extends Fragment {
         ParseQuery<Post> postParseQuery = new ParseQuery<Post>(Post.class);
         postParseQuery.include(Post.KEY_AUTHOR);
         postParseQuery.setLimit(20);
-
+        postParseQuery.addDescendingOrder(FoodStorePost.KEY_CREATED_KEY);
         postParseQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
