@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import com.codepath.foodgram.R;
+import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -137,23 +138,46 @@ public class CreateFragment extends Fragment {
     }
 
     private void savePost(String varDescription, ParseUser user, File photoFile) {
-        Post post = new Post();
-        post.setDescription(varDescription);
-        post.setUser(user);
-        post.setImage(new ParseFile(photoFile));
-        post.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e != null) {
-                    Log.d(TAG, "Error while saving");
-                    e.printStackTrace();
-                    return;
-                }
 
-                Log.d(TAG, "Success");
-                etDescription.setText("");
-                ivPostImage.setImageResource(0);
-            }
-        });
+        if(user.getString("type").equals("user")) {
+            Post post = new Post();
+            post.setDescription(varDescription);
+            post.setUser(user);
+            post.setImage(new ParseFile(photoFile));
+            post.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d(TAG, "Error while saving");
+                        e.printStackTrace();
+                        return;
+                    }
+
+                    Log.d(TAG, "Success");
+                    etDescription.setText("");
+                    ivPostImage.setImageResource(0);
+                }
+            });
+        }
+        else{
+            FoodStorePost post = new FoodStorePost();
+            post.setDescription(varDescription);
+            post.setUser(user);
+            post.setImage(new ParseFile(photoFile));
+            post.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d(TAG, "Error while saving");
+                        e.printStackTrace();
+                        return;
+                    }
+
+                    Log.d(TAG, "Success");
+                    etDescription.setText("");
+                    ivPostImage.setImageResource(0);
+                }
+            });
+        }
     }
 }

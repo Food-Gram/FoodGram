@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CenterInside;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.codepath.foodgram.R;
@@ -38,14 +41,14 @@ public class StorePostAdapter extends RecyclerView.Adapter<StorePostAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.posts, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodStorePost post = posts.get(position);
-        holder.bind(post);
+        holder.bind(post,position);
     }
 
     @Override
@@ -67,18 +70,27 @@ public class StorePostAdapter extends RecyclerView.Adapter<StorePostAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView handle;
+        private RelativeLayout container;
+        private ImageView ivIcon;
+        private TextView tvUsername;
+        private TextView tvPostTime;
         private ImageView ivImage;
         private TextView tvDescription;
+        private TextView tvLike;
+        private TextView tvComment;
         private ProgressBar progressBar;
-        private int radius = 30;
-        private int margin = 30;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            container = itemView.findViewById(R.id.rvConatiner);
+            ivIcon = itemView.findViewById(R.id.ivIcon);
+            tvUsername = itemView.findViewById(R.id.tvUsername);
+            tvPostTime = itemView.findViewById(R.id.tvPostTime);
+            ivImage = itemView.findViewById(R.id.ivImage);
+            tvDescription = itemView.findViewById(R.id.tvDescription);
 
-            handle = itemView.findViewById(R.id.handle);
+            tvLike = itemView.findViewById(R.id.tvPostLike);
+            tvComment = itemView.findViewById(R.id.tvPostComment);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
@@ -86,10 +98,18 @@ public class StorePostAdapter extends RecyclerView.Adapter<StorePostAdapter.View
         }
 
         // bind the view elements to the post
-        public void bind(FoodStorePost post) {
+        public void bind(FoodStorePost post, int position) {
 
-            // Handle
-            handle.setText(post.getUser().getUsername());
+            tvDescription.setText(post.getDescription());
+            tvUsername.setText(post.getUser().getUsername());
+            tvPostTime.setText(post.getUpdatedAt().toString());
+            tvLike.setText(String.valueOf(post.getLike()));
+            tvComment.setText(String.valueOf(post.getCommentCount()));
+
+            ParseFile icon = post.getUser().getParseFile("icon");
+            if(icon != null) {
+                Glide.with(context).load(icon.getUrl()).transform(new CenterInside(), new RoundedCorners(100)).into(ivIcon);
+            }
 
             // Image
             ParseFile image = (ParseFile) post.getImage();

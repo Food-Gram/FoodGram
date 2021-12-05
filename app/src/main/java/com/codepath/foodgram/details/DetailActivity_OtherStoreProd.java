@@ -162,12 +162,13 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
                 }
 
                 int sum = 0;
-                for(RateStore rating: rates) {
+                for (RateStore rating : rates) {
                     Log.i(TAG, "Rating:" + rating.getRate());
                     sum += rating.getRate();
                 }
-                rating.setRating((float) (sum/rates.size()));
-                System.out.println((float)(sum/rates.size()));
+                if (rates.size() != 0){
+                    rating.setRating((float) (sum / rates.size()));
+                }
             }
         });
     }
