@@ -80,7 +80,6 @@ public class DetailActivity_Rating extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void queryRate() {

@@ -96,7 +96,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvPost= itemView.findViewById(R.id.tvPost_profile);
 
             tvLike = itemView.findViewById(R.id.tvProfileLike);
-            tvComments = itemView.findViewById(R.id.tvProfileComment);
+            tvComments = itemView.findViewById(R.id.tvPostComment);
             /*
             ibLike = itemView.findViewById(R.id.ibProfileLikeClick);
             ibComment = itemView.findViewById(R.id.ibProfileComment);

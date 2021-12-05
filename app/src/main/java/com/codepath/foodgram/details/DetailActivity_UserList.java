@@ -121,8 +121,6 @@ public class DetailActivity_UserList extends AppCompatActivity {
                 for(Friend friend: friends){
                     Log.i(TAG, "Sender Friend:" + friend.getParseUser("senderUsername") +", Status :"+ friend.getStatus());
                     allusers.add(friend.getParseUser("senderUsername"));
-
-
                 }
                 adapter.notifyDataSetChanged();
             }
