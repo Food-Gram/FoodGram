@@ -187,7 +187,6 @@ public class FriendsFragment extends Fragment {
                 Collections.sort(allPosts, new Comparator<Post>(){
                     @Override
                     public int compare(Post post1, Post post2) {
-                        System.out.println(post1.getCreatedAt().compareTo(post2.getCreatedAt()) * -1);
                         return (post1.getCreatedAt().compareTo(post2.getCreatedAt()) * -1);
                     }
                 });

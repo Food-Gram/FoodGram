@@ -12,7 +12,9 @@
         <item
             android:id="@+id/nav_Notification"
             android:icon="@drawable/ic_baseline_notifications_none_24"
-            android:title="Notification" />
+            android:title="Notification"
+            />
+
         <item
             android:id="@+id/nav_Setting"
             android:icon="@drawable/ic_baseline_settings_24"
