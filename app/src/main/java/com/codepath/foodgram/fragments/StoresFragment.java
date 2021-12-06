@@ -15,11 +15,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.foodgram.R;
 import com.codepath.foodgram.adapters.PostsAdapter;
-import com.codepath.foodgram.adapters.StorePostAdapter;
 import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.FoodStorePost;
-import com.codepath.foodgram.models.Friend;
-import com.codepath.foodgram.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -150,7 +147,6 @@ public class StoresFragment extends Fragment {
                 Collections.sort(storePosts, new Comparator<FoodStorePost>(){
                     @Override
                     public int compare(FoodStorePost post1, FoodStorePost post2) {
-                        System.out.println(post1.getCreatedAt().compareTo(post2.getCreatedAt()) * -1);
                         return (post1.getCreatedAt().compareTo(post2.getCreatedAt()) * -1);
                     }
                 });
