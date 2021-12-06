@@ -5,12 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_margin="10dp"
     tools:context=".fragments.ChatFragment">
 
-    <TextView
-        android:id="@+id/textView"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChatFriends"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchID"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <EditText
+        android:id="@+id/searchID"
+        android:layout_width="269dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="7dp"
+        android:layout_toStartOf="@+id/button_searchUser"
+        android:ems="10"
+        android:fontFamily="@font/actor"
+        android:hint="Find a new friend here!"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:textSize="15dp"
+        tools:text="Find a new friend here!" />
+
+    <Button
+        android:id="@+id/button_searchUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Chat Fragment" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        android:text="Search" />
 </RelativeLayout>

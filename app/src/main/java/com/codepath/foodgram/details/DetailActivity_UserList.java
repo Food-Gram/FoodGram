@@ -2,6 +2,7 @@ package com.codepath.foodgram.details;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import com.codepath.foodgram.adapters.UsersAdapter;
 import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.Friend;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -20,6 +22,8 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//this activity is called when the user click the word 'Friend' on the profile page
 
 public class DetailActivity_UserList extends AppCompatActivity {
 
@@ -40,6 +44,7 @@ public class DetailActivity_UserList extends AppCompatActivity {
         adapter = new UsersAdapter(this, allusers, type);
         rvFriendList.setAdapter(adapter);
         rvFriendList.setLayoutManager(new LinearLayoutManager(this));
+
 
         if(type.equals("Friend")){
             queryUsers();
@@ -120,6 +125,7 @@ public class DetailActivity_UserList extends AppCompatActivity {
                 }
                 for(Friend friend: friends){
                     Log.i(TAG, "Sender Friend:" + friend.getParseUser("senderUsername") +", Status :"+ friend.getStatus());
+
                     allusers.add(friend.getParseUser("senderUsername"));
 
 
@@ -127,7 +133,9 @@ public class DetailActivity_UserList extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-
-
     }
+
+
+
+
 }

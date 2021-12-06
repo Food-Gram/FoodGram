@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Container_friendlist"
+    android:id="@+id/Container_friendlist7"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
@@ -10,7 +10,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvPost_profile"
+        android:id="@+id/searching_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -25,7 +25,7 @@
         android:id="@+id/ivImage_menu"
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:layout_below="@+id/tvPost_profile"
+        android:layout_below="@+id/searching_profile"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"

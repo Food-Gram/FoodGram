@@ -64,6 +64,9 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
+
+// this fragment is about the friends' posts
+
 public class FriendsFragment extends Fragment {
 
     private final String TAG = "FriendsFragment";
@@ -92,7 +95,7 @@ public class FriendsFragment extends Fragment {
         adapter = new PostsAdapter(getContext(), allPosts);
 
         // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.searching_Container);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

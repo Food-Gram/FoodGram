@@ -7,12 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -81,7 +79,7 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
         rvProfile = findViewById(R.id.rvStoreProfile);
         tvMenuNum = findViewById(R.id.tvStoreMenuNum);
         rating = findViewById(R.id.ratingBar);
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.searching_Container);
         context = this;
 
         // Basic information of other user

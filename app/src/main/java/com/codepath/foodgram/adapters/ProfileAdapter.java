@@ -89,11 +89,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            container = itemView.findViewById(R.id.Container_friendlist);
+            container = itemView.findViewById(R.id.Container_friendlist7);
             ivImage_user = itemView.findViewById(R.id.ivImage_menu);
             tvDescription_user = itemView.findViewById(R.id.tvDescription_user);
             tvPostTime = itemView.findViewById(R.id.tvPostTime_user);
-            tvPost= itemView.findViewById(R.id.tvPost_profile);
+            tvPost= itemView.findViewById(R.id.searching_profile);
 
             tvLike = itemView.findViewById(R.id.tvProfileLike);
             tvComments = itemView.findViewById(R.id.tvProfileComment);

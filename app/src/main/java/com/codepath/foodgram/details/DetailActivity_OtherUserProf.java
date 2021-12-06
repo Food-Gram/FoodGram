@@ -8,12 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -65,13 +63,13 @@ public class DetailActivity_OtherUserProf extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_other_user_prof);
-        ivUserIcon = findViewById(R.id.ivUserIcon);
-        tvUsername = findViewById(R.id.tvPost_profile);
-        tvPostNum = findViewById(R.id.tvPostNum);
-        tvFollowed = findViewById(R.id.tvFollowed);
-        tvFriendNum = findViewById(R.id.tvFriendNum);
+        ivUserIcon = findViewById(R.id.searching_UserIcon);
+        tvUsername = findViewById(R.id.searching_profile);
+        tvPostNum = findViewById(R.id.searching_PostNum);
+        tvFollowed = findViewById(R.id.searching_Followed);
+        tvFriendNum = findViewById(R.id.searching_FriendNum);
         rvProfile = findViewById(R.id.rvProfile);
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.searching_Container);
         context = this;
 
         // Basic information of other user
@@ -85,7 +83,7 @@ public class DetailActivity_OtherUserProf extends AppCompatActivity {
         queryFollowed();
 
         // Bottom Navigation
-        profileNavigation = findViewById(R.id.profileNavigation);
+        profileNavigation = findViewById(R.id.searching_Navigation);
         Menu menu = profileNavigation.getMenu();
 
 

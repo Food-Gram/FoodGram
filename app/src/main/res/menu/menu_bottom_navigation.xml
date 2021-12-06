@@ -23,9 +23,15 @@
     <item
         android:id="@+id/action_chat"
         android:icon="@drawable/selector_chat"
-        android:tint="@android:color/black"
+        android:tint="@color/black"
         android:title="Chat"
         app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/action_chat_new"-->
+<!--        android:icon="@drawable/selector_chat"-->
+<!--        android:tint="@android:color/black"-->
+<!--        android:title="Chat"-->
+<!--        android:visible="false" />-->
     <item
         android:id="@+id/action_profile"
         android:icon="@drawable/selector_profile"
