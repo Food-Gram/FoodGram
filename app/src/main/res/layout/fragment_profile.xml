@@ -8,10 +8,10 @@
     tools:context=".fragments.ProfileFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
+        android:id="@+id/searching_Container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/profileNavigation"
+        android:layout_below="@+id/searching_Navigation"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp">
 
@@ -26,7 +26,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/profileNavigation"
+        android:id="@+id/searching_Navigation"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="120dp"
@@ -37,22 +37,22 @@
         android:id="@+id/profilefContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/profileNavigation" />
+        android:layout_above="@id/searching_Navigation" />
 
     <TextView
-        android:id="@+id/tvPostNum"
+        android:id="@+id/searching_PostNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPost_profile"
+        android:layout_below="@+id/searching_profile"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/ivUserIcon"
+        android:layout_toEndOf="@+id/searching_UserIcon"
         android:text="Posts: 0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tvPost_profile"
+        android:id="@+id/searching_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -60,13 +60,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="0dp"
-        android:layout_toEndOf="@+id/ivUserIcon"
+        android:layout_toEndOf="@+id/searching_UserIcon"
         android:text="username"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp" />
 
     <ImageView
-        android:id="@+id/ivUserIcon"
+        android:id="@+id/searching_UserIcon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentStart="true"
@@ -74,25 +74,25 @@
         android:src="@drawable/ic_baseline_person_24" />
 
     <TextView
-        android:id="@+id/tvFollowed"
+        android:id="@+id/searching_Followed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPostNum"
+        android:layout_below="@+id/searching_PostNum"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/ivUserIcon"
+        android:layout_toEndOf="@+id/searching_UserIcon"
         android:text="Followed : 0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tvFriendNum"
+        android:id="@+id/searching_FriendNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPostNum"
+        android:layout_below="@+id/searching_PostNum"
         android:layout_marginStart="150dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/ivUserIcon"
+        android:layout_toEndOf="@+id/searching_UserIcon"
         android:text="Friends : 0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp" />

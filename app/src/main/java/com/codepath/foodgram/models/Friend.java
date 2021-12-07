@@ -11,6 +11,8 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+
+//
 @ParseClassName("FriendRequest")
 public class Friend extends ParseObject {
 
@@ -38,7 +40,7 @@ public class Friend extends ParseObject {
     }
 
     public void setReceiver(String recieverId) {
-        put(KEY_STATUS, recieverId);
+        put(KEY_RECEIVER, recieverId);
     }
 
     public int getStatus() {
@@ -48,5 +50,17 @@ public class Friend extends ParseObject {
     public void setStatus(int status) {
         put(KEY_STATUS, status);
     }
+
+
+
+
+    public void setSender2(ParseUser user) {
+        put(KEY_SENDER, user);
+    }
+
+    public void setReceiver2(ParseUser user) {
+        put(KEY_RECEIVER, user);
+    }
+
 
 }

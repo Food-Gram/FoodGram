@@ -75,13 +75,13 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ivUserIcon = view.findViewById(R.id.ivUserIcon);
-        tvUsername = view.findViewById(R.id.tvPost_profile);
-        tvPostNum = view.findViewById(R.id.tvPostNum);
-        tvFollowed = view.findViewById(R.id.tvFollowed);
-        tvFriendNum = view.findViewById(R.id.tvFriendNum);
+        ivUserIcon = view.findViewById(R.id.searching_UserIcon);
+        tvUsername = view.findViewById(R.id.searching_profile);
+        tvPostNum = view.findViewById(R.id.searching_PostNum);
+        tvFollowed = view.findViewById(R.id.searching_Followed);
+        tvFriendNum = view.findViewById(R.id.searching_FriendNum);
         rvProfile = view.findViewById(R.id.rvProfile);
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.searching_Container);
 
         // Basic information of current user
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
         queryFollowed();
 
         // Bottom Navigation
-        profileNavigation = view.findViewById(R.id.profileNavigation);
+        profileNavigation = view.findViewById(R.id.searching_Navigation);
         Menu menu = profileNavigation.getMenu();
 
 

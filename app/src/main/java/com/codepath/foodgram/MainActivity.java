@@ -13,6 +13,8 @@ import androidx.navigation.Navigation;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,9 +76,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragment = new CreateFragment();
                         break;
                     default:
-                        if(currentUser.get("type").equals("user")) {
+                        if (currentUser.get("type").equals("user")) {
                             fragment = new ProfileFragment();
-                        }else{
+                        } else {
                             fragment = new StoreProfileFragment();
                         }
                         break;
@@ -116,10 +118,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     @Override
-    public void onBackPressed(){
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer((GravityCompat.START));
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
@@ -154,9 +156,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     // Update user icon and username to action bar
-    public void updateUser(NavigationView navigationView){
+    public void updateUser(NavigationView navigationView) {
 
-        View headerView =navigationView.getHeaderView(0);
+        View headerView = navigationView.getHeaderView(0);
         TextView navUsername = headerView.findViewById(R.id.nav_username);
         ImageView navUserIcon = headerView.findViewById(R.id.nav_usericon);
 
@@ -166,3 +168,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 }
+

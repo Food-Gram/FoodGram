@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.os.Parcel;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -40,8 +39,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +95,7 @@ public class StoreProfileFragment extends Fragment {
         rvProfile = view.findViewById(R.id.rvStoreProfile);
         tvMenuNum = view.findViewById(R.id.tvStoreMenuNum);
         rating = view.findViewById(R.id.ratingBar);
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.searching_Container);
 
         // Basic information of current user
         ParseUser currentUser = ParseUser.getCurrentUser();

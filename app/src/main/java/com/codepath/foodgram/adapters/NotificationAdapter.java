@@ -21,7 +21,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.foodgram.R;
 import com.codepath.foodgram.details.DetailActivity_OtherStoreProd;
 import com.codepath.foodgram.details.DetailActivity_OtherUserProf;
-import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.Friend;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -34,38 +33,20 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder>{
 
-    public static final String TAG = "UsersAdapter";
+//adapter to hold the each user that send friend request to the current user
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>{
+
+
+    public static final String TAG = "NotificationAdapter";
 
     private Context context;
-    private List<ParseUser> users;
-    private String type;
+    private List<ParseUser> users;  //userlist that send friend request
 
 
-
-    public UsersAdapter(Context context, List<ParseUser> users, String type){
+    public NotificationAdapter(Context context, List<ParseUser> users){
         this.context = context;
         this.users = users;
-        this.type = type;
-
-    }
-
-    @NonNull
-    @Override
-    public UsersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.users_list, parent, false);
-        return new UsersAdapter.ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull UsersAdapter.ViewHolder holder, int position) {
-        ParseUser user = users.get(position);
-        try {
-            holder.bind(user, position);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     // Clean all elements of the recycler
@@ -80,34 +61,54 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder>{
         notifyDataSetChanged();
     }
 
+    @NonNull
+    @Override
+    public NotificationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.notification_item, parent, false);
+        return new NotificationAdapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, int position) {
+        ParseUser user = users.get(position);
+        try {
+            holder.bind(user, position);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public int getItemCount() {
         return users.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout container;
         private ImageView ivImage_user;
         private TextView tvUsername;
-        private Button bnUnfriend;
-        private Button bnUnfollow;
+        private Button bnAgree;
+        private Button bnRefuse;
         private ParseFile image;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            container = itemView.findViewById(R.id.Container_friendlist7);
-            ivImage_user = itemView.findViewById(R.id.ivUserListIcon);
-            tvUsername = itemView.findViewById(R.id.tvUserListName);
-            bnUnfriend = itemView.findViewById(R.id.bnUnfriend);
-            bnUnfollow = itemView.findViewById(R.id.bnUnfollow);
-
+            container = itemView.findViewById(R.id.Container_friendlist6);
+            ivImage_user = itemView.findViewById(R.id.ivUserListIcon2);
+            tvUsername = itemView.findViewById(R.id.tvUserListName2);
+            bnAgree = itemView.findViewById(R.id.bnAgree);
+            bnRefuse = itemView.findViewById(R.id.bnRefuse);
 
         }
-        public void bind (ParseUser user, int position) throws ParseException {
+
+        public void bind(ParseUser user, int position) throws ParseException {
 
             //Display information
             tvUsername.setText(user.fetchIfNeeded().getUsername());
+
+            Log.i(TAG, "Sender:" + user.fetchIfNeeded().getUsername());
 
             image = user.getParseFile("icon");
             if (image != null) {
@@ -115,23 +116,16 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder>{
                         new RoundedCorners(100)).into(ivImage_user);
             }
 
-            if (type.equals("Friend")){
-                bnUnfriend.setVisibility(ImageButton.VISIBLE);
-            }
-
-            if(type.equals("Followed")){
-                bnUnfollow.setVisibility(ImageButton.VISIBLE);
-            }
 
             //onClick
             tvUsername.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(user.getString("type").equals("FoodStore")) {
+                    if (user.getString("type").equals("FoodStore")) {
                         Intent i = new Intent(context, DetailActivity_OtherStoreProd.class);
                         i.putExtra("user", Parcels.wrap(user));
                         context.startActivity(i);
-                    }else{
+                    } else {
                         Intent i = new Intent(context, DetailActivity_OtherUserProf.class);
                         i.putExtra("user", Parcels.wrap(user));
                         context.startActivity(i);
@@ -140,48 +134,60 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder>{
             });
 
 
-            bnUnfriend.setOnClickListener(new View.OnClickListener() {
+            bnAgree.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    users.remove(position);
-                    UnFriend(user);
-                    Log.i(TAG, "Friend Deleted!");
+
+                    AddFriend(user);
                     notifyDataSetChanged();
+                    bnAgree.setVisibility(ImageButton.INVISIBLE);
+                    bnRefuse.setVisibility(ImageButton.INVISIBLE);
                 }
             });
 
-            bnUnfollow.setOnClickListener(new View.OnClickListener() {
+            bnRefuse.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    users.remove(position);
-                    UnFollow(user);
-                    Log.i(TAG, "Friend Deleted!");
+
+                    RefueseFriend(user);
                     notifyDataSetChanged();
+                    bnAgree.setVisibility(ImageButton.INVISIBLE);
+                    bnRefuse.setVisibility(ImageButton.INVISIBLE);
                 }
             });
+
         }
 
+        private void AddFriend(ParseUser user){
 
-        private void UnFollow(ParseUser user) {
-            ParseQuery<Followed> query = ParseQuery.getQuery(Followed.class);
-            query.whereEqualTo(Followed.KEY_USER, ParseUser.getCurrentUser());
-            query.whereEqualTo(Followed.KEY_FOLLOW, user);
-            query.findInBackground(new FindCallback<Followed>() {
+            ParseQuery<Friend> query1 = ParseQuery.getQuery(Friend.class);
+            query1.whereEqualTo(Friend.KEY_SENDER, user);
+            query1.whereEqualTo(Friend.KEY_RECEIVER, ParseUser.getCurrentUser());
+            query1.findInBackground(new FindCallback<Friend>() {
                 @Override
-                public void done(List<Followed> follows, ParseException e) {
+                public void done(List<Friend> friends, ParseException e) {
                     if (e != null) {
                         Log.e(TAG, "Issue with getting friends", e);
                         return;
                     }
-                    for (Followed i : follows) {
-                        i.deleteInBackground();
-                        Log.i(TAG, "Unfollowed!");
+                    for (Friend i : friends) {
+                        i.setStatus(1);
+                        i.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    Log.e(TAG, "Error while saving", e);
+                                }
+                                Log.i(TAG, "Friend status changed successful!!");
+                            }
+                        });
                     }
                 }
             });
         }
 
-        private void UnFriend(ParseUser user) {
+
+        private void RefueseFriend(ParseUser user){
 
             ParseQuery<Friend> query1 = ParseQuery.getQuery(Friend.class);
             query1.whereEqualTo(Friend.KEY_SENDER, user);
@@ -202,31 +208,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder>{
                                     Log.e(TAG, "Error while saving", e);
                                 }
                                 Log.i(TAG, "Friend status changed successful!!");
-                            }
-                        });
-                    }
-                }
-            });
-
-            ParseQuery<Friend> query2 = ParseQuery.getQuery(Friend.class);
-            query2.whereEqualTo(Friend.KEY_SENDER, ParseUser.getCurrentUser());
-            query2.whereEqualTo(Friend.KEY_RECEIVER, user);
-            query2.findInBackground(new FindCallback<Friend>() {
-                @Override
-                public void done(List<Friend> friends, ParseException e) {
-                    if(e != null){
-                        Log.e(TAG, "Issue with getting friends", e);
-                        return;
-                    }
-                    for(Friend i: friends){
-                        i.setStatus(0);
-                        i.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e != null) {
-                                    Log.e(TAG, "Error while saving", e);
-                                }
-                                Log.i(TAG, "Post save was successful!!");
                             }
                         });
                     }

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Container_friendlist7"
+    android:id="@+id/Container_friendlist6"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="3dp"
@@ -11,7 +11,7 @@
 
 
     <ImageView
-        android:id="@+id/ivUserListIcon"
+        android:id="@+id/ivUserListIcon2"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentStart="true"
@@ -23,55 +23,48 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvUserListName"
+        android:id="@+id/tvUserListName2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="5dp"
-        android:layout_toEndOf="@+id/ivUserListIcon"
+        android:layout_toEndOf="@+id/ivUserListIcon2"
         android:textColor="#000000"
         android:textSize="20sp"
         tools:text="Username" />
 
     <Button
-        android:id="@+id/bnUnfriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/bnAgree"
+        android:layout_width="73dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:text="UnFriend"
-        android:textSize="12sp"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/bnUnfollow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:text="UnFriend"
-        android:textSize="12sp"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/bnAddfriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="11dp"
         android:text="Add"
-        android:textSize="12sp"
-        android:visibility="invisible" />
+        android:textSize="10sp"
+        android:visibility="visible"
+        app:iconPadding="0dp" />
+
+    <Button
+        android:id="@+id/bnRefuse"
+        android:layout_width="73dp"
+        android:layout_height="32dp"
+        android:layout_below="@+id/bnAgree"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="11dp"
+        android:backgroundTint="@color/medium_red"
+        android:text="Refuse"
+        android:textSize="10sp"
+        android:visibility="visible" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/ivUserListIcon"
+        android:layout_below="@+id/ivUserListIcon2"
         android:layout_marginTop="1dp"
         android:background="?android:attr/listDivider"></View>
 

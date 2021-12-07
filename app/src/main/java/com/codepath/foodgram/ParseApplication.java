@@ -2,6 +2,7 @@ package com.codepath.foodgram;
 
 import android.app.Application;
 
+import com.codepath.foodgram.models.ChatMsg;
 import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Friend;
@@ -23,6 +24,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Followed.class);
         ParseObject.registerSubclass(Friend.class);
         ParseObject.registerSubclass(StoreMenu.class);
+        ParseObject.registerSubclass(ChatMsg.class);
         ParseObject.registerSubclass(RateStore.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
