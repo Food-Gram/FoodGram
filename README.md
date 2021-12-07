@@ -32,8 +32,8 @@ When food lovers can't find friends or family members to try food with, they can
 
 * Users sign up as a normal user or a food store （Two types of user）.
 - [x] Normal User logs in to access friend list, previous chats, and list of following food stores.
-* Normal User follow what they are interested in.
-* Users who are friends have a chat window to communicate.
+- [x] Normal User follow what they are interested in.
+- [x] Users who are friends have a chat window to communicate.
 - [x] Each normal user has a profile page which shows the posts submitted. Friends can thums up or add comments on each post.
 - [x] Each normal user can view the profile of the food store that they followed.
 - [x] Both type of user can view the profile of the user in their friend list.
@@ -88,7 +88,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 -[x] Users third page
    -[x] Compose, including images, description
 * Normal User fourth page
-   * Show the list of friends, in a recyclerview
+   -[x] Show the list of friends, in a recyclerview
    * Each item in recyclerview contains the user’s headshot, username, and the last message sent.
    * Items are ordered chronologically.
    * On the top bar of the page, shows the number of unread messages. 
@@ -116,7 +116,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 -[x] Food Store third page
     -[x] Compose, including images, description
 * Food Store User fourth page
-    * Show the list of friends, in a recyclerview
+    -[x] Show the list of friends, in a recyclerview
     * Each item in recyclerview contains the user’s headshot, username, and the last message sent.
     * Items are ordered chronologically.
     * On the top bar of the page, shows the number of unread messages.
