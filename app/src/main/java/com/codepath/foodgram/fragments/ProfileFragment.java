@@ -224,10 +224,11 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
                 for(Friend friend: friends){
-                    Log.i(TAG, "Friend:" + friend.getReceiver() + ", Status :"+ friend.getStatus());
+                    Log.i(TAG, "Friend:" + friend.getReceiver() + ", Status1 :"+ friend.getStatus());
 
                 }
                 friendNum = friends.size();
+                tvFriendNum.setText("Friends : "+ friendNum);
             }
         });
         ParseQuery<Friend> query2 = ParseQuery.getQuery(Friend.class);
@@ -242,7 +243,7 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
                 for(Friend friend: friends){
-                    Log.i(TAG, "Friend:" + friend.getSender() +", Status :"+ friend.getStatus());
+                    Log.i(TAG, "Friend:" + friend.getSender() +", Status2 :"+ friend.getStatus());
                 }
                 friendNum += friends.size();
                 tvFriendNum.setText("Friends : "+ friendNum);

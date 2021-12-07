@@ -4,22 +4,31 @@ import com.codepath.foodgram.models.FoodStorePost;
 import com.codepath.foodgram.models.Post;
 import com.codepath.foodgram.R;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder>{
+
+    public static final String TAG = "ProfileAcitivity";
+
     private Context context;
     private List<Post> posts;
     private List<FoodStorePost> storePosts;
@@ -79,13 +88,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private TextView tvDescription_user;
         private TextView tvLike;
         private TextView tvComments;
-
+        private ImageButton ibDelete;
         private ParseFile image;
-        /*
-        private ImageButton ibShare;
         private ImageButton ibLike;
         private ImageButton ibComment;
-         */
+        private ImageButton ibLikeClick;
+        private ImageButton ibCommentClick;
+
+        private boolean like;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,12 +107,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             tvPost= itemView.findViewById(R.id.searching_profile);
 
             tvLike = itemView.findViewById(R.id.tvProfileLike);
-            tvComments = itemView.findViewById(R.id.tvProfileComment);
-            /*
-            ibLike = itemView.findViewById(R.id.ibProfileLikeClick);
+            tvComments = itemView.findViewById(R.id.tvPostComment);
+            ibDelete = itemView.findViewById(R.id.ibDelete);
+
+            ibLike = itemView.findViewById(R.id.ibProfileLike);
             ibComment = itemView.findViewById(R.id.ibProfileComment);
-            ibShare = itemView.findViewById(R.id.ibProfileShareClick);
-            */
+            ibLikeClick = itemView.findViewById(R.id.ibProfileLikeClick);
+            ibCommentClick = itemView.findViewById(R.id.ibProfileCommentClick);
 
         }
         public void bind (Post post, FoodStorePost storePost, int position){
@@ -118,6 +130,73 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 if (image != null) {
                     Glide.with(context).load(image.getUrl()).into(ivImage_user);
                 }
+
+                ibDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        storePost.deleteInBackground();
+                        Log.i(TAG, "Item Deleted!");
+                        storePosts.remove(position);
+                        notifyDataSetChanged();
+
+                    }
+                });
+
+                List<String> user = storePost.getLikeUsers();
+
+                like = user.contains(ParseUser.getCurrentUser().getUsername());
+
+                if(like) {
+                    ibLike.setVisibility(ImageButton.INVISIBLE);
+                    ibLikeClick.setVisibility(ImageButton.VISIBLE);
+                    ibLikeClick.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            storePost.RemoveLikeUsers(ParseUser.getCurrentUser().getUsername(), storePost.getLikeUsers());
+                            storePost.LikeDecrement();
+                            ibLike.setVisibility(ImageButton.VISIBLE);
+                            ibLikeClick.setVisibility(ImageButton.INVISIBLE);
+                            storePost.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error while saving", e);
+                                        Toast.makeText(context, "Error while saving!", Toast.LENGTH_SHORT).show();
+                                    }
+                                    Log.i(TAG, "like remove was successful!!");
+                                }
+                            });
+                            notifyDataSetChanged();
+                        }
+                    });
+
+                }
+                else {
+                    ibLikeClick.setVisibility(ImageButton.INVISIBLE);
+                    ibLike.setVisibility(ImageButton.VISIBLE);
+                    ibLike.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            storePost.setLikeUsers(ParseUser.getCurrentUser().getUsername(), storePost.getLikeUsers());
+                            storePost.LikeIncrement();
+                            ibLikeClick.setVisibility(ImageButton.VISIBLE);
+                            ibLike.setVisibility(ImageButton.INVISIBLE);
+                            storePost.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error while saving", e);
+                                        Toast.makeText(context, "Error while saving!", Toast.LENGTH_SHORT).show();
+                                    }
+                                    Log.i(TAG, "like save was successful!!");
+                                }
+                            });
+                            notifyDataSetChanged();
+                        }
+                    });
+
+                }
+
             } else {
                 tvDescription_user.setText(post.getDescription());
                 int currentPosition1 = getItemCount() - position;
@@ -130,22 +209,61 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 if (image != null) {
                     Glide.with(context).load(image.getUrl()).into(ivImage_user);
                 }
+
+                List<String> user = post.getLikeUsers();
+
+                like = user.contains(ParseUser.getCurrentUser().getUsername());
+
+                if(like) {
+                    ibLike.setVisibility(ImageButton.INVISIBLE);
+                    ibLikeClick.setVisibility(ImageButton.VISIBLE);
+                    ibLikeClick.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            post.RemoveLikeUsers(ParseUser.getCurrentUser().getUsername(), post.getLikeUsers());
+                            post.LikeDecrement();
+                            ibLike.setVisibility(ImageButton.VISIBLE);
+                            ibLikeClick.setVisibility(ImageButton.INVISIBLE);
+                            post.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error while saving", e);
+                                        Toast.makeText(context, "Error while saving!", Toast.LENGTH_SHORT).show();
+                                    }
+                                    Log.i(TAG, "like remove was successful!!");
+                                }
+                            });
+                            notifyDataSetChanged();
+                        }
+                    });
+
+                }
+                else {
+                    ibLikeClick.setVisibility(ImageButton.INVISIBLE);
+                    ibLike.setVisibility(ImageButton.VISIBLE);
+                    ibLike.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            post.setLikeUsers(ParseUser.getCurrentUser().getUsername(), post.getLikeUsers());
+                            post.LikeIncrement();
+                            ibLikeClick.setVisibility(ImageButton.VISIBLE);
+                            ibLike.setVisibility(ImageButton.INVISIBLE);
+                            post.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error while saving", e);
+                                        Toast.makeText(context, "Error while saving!", Toast.LENGTH_SHORT).show();
+                                    }
+                                    Log.i(TAG, "like save was successful!!");
+                                }
+                            });
+                            notifyDataSetChanged();
+                        }
+                    });
+                }
             }
         }
-
-
-            /*
-            container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(context, DetailActivity.class);
-                    i.putExtra("Fragment","ProfileFragment");
-                    i.putExtra("post", Parcels.wrap(post));
-                    i.putExtra("PositionProfile",position);
-                    context.startActivity(i);
-                }
-            });
-            */
-
     }
 }

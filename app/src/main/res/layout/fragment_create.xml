@@ -7,36 +7,47 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CreateFragment">
 
-    <EditText
-        android:id="@+id/etDescription"
+    <ImageView
+        android:id="@+id/ivPostImage"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:ems="10"
-        android:hint="Write a caption..."
-        android:inputType="textPersonName" />
+        android:layout_height="200dp"
+        tools:ignore="ImageContrastCheck"
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/todo" />
 
     <Button
         android:id="@+id/btnCaptureImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Take Picture"
+        android:background="#673AB7"
+        android:backgroundTint="#673AB7"
+        android:foregroundTint="#673AB7"
+        android:text="Upload"
         android:textAlignment="center"
+        android:textColor="@color/white"
         app:cornerRadius="5dp"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
         app:iconSize="40dp" />
 
-    <ImageView
-        android:id="@+id/ivPostImage"
+    <EditText
+        android:id="@+id/etDescription"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="100dp"
+        android:ems="10"
+        android:hint="@string/write_a_caption"
+        android:inputType="textPersonName"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:background="#673AB7"
+        android:backgroundTint="#9C27B0"
+        android:foregroundTint="#9C27B0"
+        android:text="@string/submit"
+        android:textColor="@color/white"
         app:cornerRadius="5dp"
         app:iconGravity="textStart" />
 

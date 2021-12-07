@@ -224,6 +224,7 @@ public class DetailActivity_OtherUserProf extends AppCompatActivity {
 
                 }
                 friendNum = friends.size();
+                tvFriendNum.setText("Friends : "+ friendNum);
             }
         });
         ParseQuery<Friend> query2 = ParseQuery.getQuery(Friend.class);

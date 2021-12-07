@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".details.DetailActivity_Rating">
+
+    <RadioGroup
+        android:id="@+id/ratingGroup"
+        android:layout_width="287dp"
+        android:layout_height="280dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/rb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="20dp"
+            android:text="1 - Dislike"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="180dp" />
+
+        <RadioButton
+            android:id="@+id/rb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rb1"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:text="2 - OK"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="228dp" />
+
+        <RadioButton
+            android:id="@+id/rb3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rb2"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:text="3 - Neutral"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="276dp" />
+
+        <RadioButton
+            android:id="@+id/rb4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rb7"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:text="4 - Yummy !"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.692"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="276dp" />
+
+        <RadioButton
+            android:id="@+id/rb5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rb4"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:text="5- Tastes Great !"
+            tools:layout_editor_absoluteX="212dp"
+            tools:layout_editor_absoluteY="324dp" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/bnRatingSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRatingMsg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Submit"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="464dp" />
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="Provide your rating"
+        android:textColor="#3A3A3A"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="94dp" />
+
+    <TextView
+        android:id="@+id/tvRatingMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ratingGroup"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="30dp"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:text="You did not select any box !"
+        android:textColor="#FA4E4E"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tvSubmitMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bnRatingSubmit"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="20dp"
+        android:text="Rating Submit !   Back ->"
+        android:textColor="#342CFF"
+        android:visibility="invisible" />
+
+</RelativeLayout>

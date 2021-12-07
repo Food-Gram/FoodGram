@@ -139,12 +139,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvAddress"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
-        android:numStars="10"
+        android:numStars="5"
         android:progressTint="#7CC3E3"
-        android:rating="8.5" />
+        android:rating="1" />
+
+    <Button
+        android:id="@+id/bnRating"
+        android:layout_width="84dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/StoreprofileNavigation"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/ratingBar"
+        android:text="Rate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="16sp" />
 
 
 </RelativeLayout>
