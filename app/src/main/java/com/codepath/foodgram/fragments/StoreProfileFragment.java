@@ -95,7 +95,7 @@ public class StoreProfileFragment extends Fragment {
         rvProfile = view.findViewById(R.id.rvStoreProfile);
         tvMenuNum = view.findViewById(R.id.tvStoreMenuNum);
         rating = view.findViewById(R.id.ratingBar);
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.searching_Container);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer_Store);
 
         // Basic information of current user
         ParseUser currentUser = ParseUser.getCurrentUser();

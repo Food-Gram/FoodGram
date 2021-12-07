@@ -22,6 +22,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.foodgram.R;
 import com.codepath.foodgram.details.DetailActivity_OtherStoreProd;
 import com.codepath.foodgram.details.DetailActivity_OtherUserProf;
+import com.codepath.foodgram.models.Followed;
 import com.codepath.foodgram.models.Friend;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -90,17 +91,16 @@ public class Users2Adapter extends RecyclerView.Adapter<Users2Adapter.ViewHolder
         private ImageView ivImage_user;
         private TextView tvUsername;
         private Button bnAddfriend;
+        private Button bnFollowStore;
         private ParseFile image;
-
-
+        
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.Container_friendlist7);
             ivImage_user = itemView.findViewById(R.id.ivUserListIcon);
             tvUsername = itemView.findViewById(R.id.tvUserListName);
             bnAddfriend = itemView.findViewById(R.id.bnAddfriend);
-
-
+            bnFollowStore = itemView.findViewById(R.id.bnFollowStore);
         }
 
         public void bind(ParseUser user, int position) throws ParseException {
@@ -116,7 +116,10 @@ public class Users2Adapter extends RecyclerView.Adapter<Users2Adapter.ViewHolder
 
 
             // if the searching user is not ur friend, then ur able to add
-                bnAddfriend.setVisibility(ImageButton.VISIBLE);
+            bnAddfriend.setVisibility(ImageButton.VISIBLE);
+
+            // if the searching user is not followed then ur able to add
+            bnFollowStore.setVisibility(ImageButton.VISIBLE);
 
 
             //onClick
@@ -146,8 +149,35 @@ public class Users2Adapter extends RecyclerView.Adapter<Users2Adapter.ViewHolder
                 }
             });
 
-            checkIfAdded(user);
+            bnFollowStore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AddFollow(user);
+                    Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
+                    bnFollowStore.setVisibility(ImageButton.INVISIBLE);
+                }
+            });
 
+            checkIfAdded(user);
+            checkIfFollowed(user);
+
+        }
+
+        private void AddFollow(ParseUser user) {
+            Followed newFollow = new Followed();
+            newFollow.setSender(ParseUser.getCurrentUser());
+            newFollow.setFollowed(user);
+            newFollow.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.d(TAG, "Error while saving");
+                        e.printStackTrace();
+                        return;
+                    }
+                    Log.i(TAG, "Success");
+                }
+            });
         }
 
         private void AddFriend(ParseUser user){
@@ -170,8 +200,6 @@ public class Users2Adapter extends RecyclerView.Adapter<Users2Adapter.ViewHolder
                     Log.i(TAG, "Success");
                 }
             });
-
-
         }
 
 
@@ -191,7 +219,7 @@ public class Users2Adapter extends RecyclerView.Adapter<Users2Adapter.ViewHolder
                         return;
                     }
                     for (Friend i : friends) {
-                        bnAddfriend.setVisibility(ImageButton.INVISIBLE);
+                        bnAddfriend.setVisibility(Button.INVISIBLE);
                     }
                 }
             });
@@ -207,7 +235,25 @@ public class Users2Adapter extends RecyclerView.Adapter<Users2Adapter.ViewHolder
                         return;
                     }
                     for(Friend i: friends){
-                        bnAddfriend.setVisibility(ImageButton.INVISIBLE);
+                        bnAddfriend.setVisibility(Button.INVISIBLE);
+                    }
+                }
+            });
+        }
+
+        private void checkIfFollowed(ParseUser user) {
+            ParseQuery<Followed> query = ParseQuery.getQuery(Followed.class);
+            query.whereEqualTo(Followed.KEY_FOLLOW, user);
+            query.addDescendingOrder(Friend.KEY_CREATED_AT);
+            query.findInBackground(new FindCallback<Followed>() {
+                @Override
+                public void done(List<Followed> follow, ParseException e) {
+                    if(e != null){
+                        Log.e(TAG, "Issue with getting followed store", e);
+                        return;
+                    }
+                    for (Followed i :follow){
+                        bnFollowStore.setVisibility(Button.INVISIBLE);
                     }
                 }
             });

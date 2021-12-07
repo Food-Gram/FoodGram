@@ -7,17 +7,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.view.View;
 import android.widget.Button;
-
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
@@ -58,6 +58,7 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
     private TextView tvMenuNum;
     private RatingBar rating;
     private Button giveRate;
+    private Button bnFollow;
     private RecyclerView rvProfile;
     private int friendNum;
 
@@ -86,8 +87,9 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
         rvProfile = findViewById(R.id.rvStoreProfile);
         tvMenuNum = findViewById(R.id.tvStoreMenuNum);
         rating = findViewById(R.id.ratingBar);
+        bnFollow = findViewById(R.id.bnFollow);
         giveRate = findViewById(R.id.bnRating);
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.rvPosts_Store);
         context = this;
 
         // Basic information of other user
@@ -97,8 +99,8 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
         Glide.with(context).load(user.getParseFile("icon").getUrl())
                 .transform(new CenterInside(), new RoundedCorners(100)).into(ivUserIcon);
 
-        queryFriend();
         queryFollower();
+        queryFriend();
         queryRating();
 
         tvAddress.setText("Address : " + user.getString("storeAddress"));
@@ -120,7 +122,7 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
                         queryPosts("posts");
                         refresh("posts");
                         break;
-                    default :
+                    default:
                         allmenus = new ArrayList<>();
                         Iadapter = new MenuAdapter(context, allmenus);
                         rvProfile.setAdapter(Iadapter);
@@ -142,12 +144,34 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
         giveRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context,DetailActivity_Rating.class);
+                Intent i = new Intent(context, DetailActivity_Rating.class);
                 i.putExtra("store", Parcels.wrap(user));
                 startActivity(i);
             }
         });
 
+        bnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Followed follow = new Followed();
+                follow.setSender(ParseUser.getCurrentUser());
+                follow.setFollowed(user);
+                follow.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.d(TAG, "Error while saving");
+                            e.printStackTrace();
+                            return;
+                        }
+                        Log.d(TAG, "Success");
+                        Toast.makeText(DetailActivity_OtherStoreProd.this, "Followed", Toast.LENGTH_SHORT).show();
+                        bnFollow.setVisibility(Button.INVISIBLE);
+                        queryFollower();
+                    }
+                });
+            }
+        });
     }
 
     private void queryRating() {
@@ -307,6 +331,9 @@ public class DetailActivity_OtherStoreProd extends AppCompatActivity {
                     return;
                 }
                 tvFollower.setText("Followed : "+ follow.size());
+                for (Followed i :follow){
+                    bnFollow.setVisibility(Button.INVISIBLE);
+                }
             }
         });
     }

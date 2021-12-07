@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,7 +36,7 @@ import java.io.File;
 public class CreateFragment extends Fragment {
     private final String TAG = "CreateFragment";
     private EditText etDescription;
-    private Button btnCaptureImage;
+    private ImageButton btnCaptureImage;
     private ImageView ivPostImage;
     private Button btnSubmit;
     private final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -65,7 +67,7 @@ public class CreateFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         etDescription = view.findViewById(R.id.etDescription);
-        btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
+        btnCaptureImage = view.findViewById(R.id.ibTakePhoto_Post);
         ivPostImage = view.findViewById(R.id.ivPostImage);
         ivPostImage.setVisibility(View.GONE);
         btnSubmit = view.findViewById(R.id.btnSubmit);
@@ -81,8 +83,15 @@ public class CreateFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String varDescription = etDescription.getText().toString();
                 ParseUser user = ParseUser.getCurrentUser();
+
+                String varDescription = etDescription.getText().toString();
+
+                if (varDescription.isEmpty()) {
+                    Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "No Description");
+                    return;
+                }
 
                 if ( photoFile == null || ivPostImage.getDrawable() == null ) {
                     Log.e(TAG, "No photo to submit");
@@ -92,6 +101,7 @@ public class CreateFragment extends Fragment {
 
                 // Submit the post to parse
                 savePost(varDescription, user, photoFile);
+                Toast.makeText(getContext(), "Post uploaded!!", Toast.LENGTH_SHORT).show();
                 ivPostImage.setVisibility(View.GONE);
             }
         });

@@ -52,13 +52,13 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:text="UnFriend"
+        android:text="UnFollow"
         android:textSize="12sp"
         android:visibility="invisible" />
 
     <Button
         android:id="@+id/bnAddfriend"
-        android:layout_width="wrap_content"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
@@ -67,13 +67,27 @@
         android:textSize="12sp"
         android:visibility="invisible" />
 
+    <Button
+        android:id="@+id/bnFollowStore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/bnAddfriend"
+        android:text="Follow"
+        android:visibility="invisible" />
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_below="@+id/ivUserListIcon"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="1dp"
+        android:layout_marginEnd="5dp"
         android:background="?android:attr/listDivider"></View>
+
+
 
 
 </RelativeLayout>
