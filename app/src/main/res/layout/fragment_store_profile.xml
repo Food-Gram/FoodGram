@@ -8,7 +8,7 @@
     tools:context=".fragments.ProfileFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/searching_Container"
+        android:id="@+id/swipeContainer_Store"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/StoreprofileNavigation"
@@ -144,7 +144,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:numStars="5"
-        android:progressTint="#7CC3E3"
+        android:progressTint="@color/light_coral"
         android:rating="1" />
 
 

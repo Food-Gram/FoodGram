@@ -20,18 +20,18 @@ public class Followed extends ParseObject {
     //public static final String KEY_CREATED = "createdAt";
 
 
-    public String getSender() {
-        return getString(KEY_USER);
+    public ParseUser getSender() {
+        return getParseUser(KEY_USER);
     }
 
-    public void setSender(String userId) {
+    public void setSender(ParseUser userId) {
         put(KEY_USER, userId);
     }
 
-    public String getFollowed() {
-        return getString(KEY_FOLLOW);
+    public ParseUser getFollowed() {
+        return getParseUser(KEY_FOLLOW);
     }
 
-    public void setFollowedNum(String followedId){put(KEY_FOLLOW, followedId);}
+    public void setFollowed(ParseUser followedId){put(KEY_FOLLOW, followedId);}
 
 }

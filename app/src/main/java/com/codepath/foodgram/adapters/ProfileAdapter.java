@@ -91,9 +91,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private ImageButton ibDelete;
         private ParseFile image;
         private ImageButton ibLike;
-        private ImageButton ibComment;
         private ImageButton ibLikeClick;
-        private ImageButton ibCommentClick;
 
         private boolean like;
 
@@ -111,9 +109,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             ibDelete = itemView.findViewById(R.id.ibDelete);
 
             ibLike = itemView.findViewById(R.id.ibProfileLike);
-            ibComment = itemView.findViewById(R.id.ibProfileComment);
             ibLikeClick = itemView.findViewById(R.id.ibProfileLikeClick);
-            ibCommentClick = itemView.findViewById(R.id.ibProfileCommentClick);
+
 
         }
         public void bind (Post post, FoodStorePost storePost, int position){
@@ -209,6 +206,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 if (image != null) {
                     Glide.with(context).load(image.getUrl()).into(ivImage_user);
                 }
+
+                ibDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        post.deleteInBackground();
+                        Log.i(TAG, "Item Deleted!");
+                        posts.remove(position);
+                        notifyDataSetChanged();
+
+                    }
+                });
 
                 List<String> user = post.getLikeUsers();
 

@@ -50,7 +50,7 @@ public class StoresFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        rvPosts = view.findViewById(R.id.rvPosts);
+        rvPosts = view.findViewById(R.id.rvPosts_Store);
         storePosts = new ArrayList<>();
 
         adapter = new PostsAdapter(getContext(), null, storePosts);

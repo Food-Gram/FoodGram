@@ -11,4 +11,9 @@
     <color name="gray">#FFAFABAB</color>
     <color name="blue1">#33B0E5</color>
     <color name="medium_red">#ffe0245e</color>
+    <color name="pink_2">#FF9999</color>
+    <color name="pink_1">#EBA697</color>
+    <color name="red_1">#CD402E</color>
+    <color name="light_coral">#F08080</color>
+
 </resources>

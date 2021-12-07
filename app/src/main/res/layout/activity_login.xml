@@ -45,7 +45,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        android:backgroundTint="#0C056D"
+        android:backgroundTint="@color/light_coral"
         android:text="Log In"
         android:textColor="@color/white" />
 
@@ -59,7 +59,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        android:backgroundTint="#0C056D"
+        android:backgroundTint="@color/light_coral"
         android:text="Sign Up"
         android:textColor="@color/white" />
 
