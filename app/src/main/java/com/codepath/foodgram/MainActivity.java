@@ -34,11 +34,17 @@ import com.codepath.foodgram.fragments.ProfileFragment;
 import com.codepath.foodgram.fragments.SettingFragment;
 import com.codepath.foodgram.fragments.StoreProfileFragment;
 import com.codepath.foodgram.fragments.StoresFragment;
+import com.codepath.foodgram.models.Friend;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView bottomNavigation;
 
     private DrawerLayout drawer;
-    private
+    private Boolean notification = false;
     ParseUser currentUser = ParseUser.getCurrentUser();
 
     @Override
@@ -96,9 +102,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             bottomNavigation.setSelectedItemId(R.id.action_friends);
 
 
+
         // Action Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -115,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(ParseUser.getCurrentUser().getString("type").equals("user")) {
             menu.findItem(R.id.nav_Menu).setVisible(false);
         }
+        queryNotification(menu);
+
     }
 
 
@@ -137,6 +147,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new MenuFragment()).commit();
                 break;
             case R.id.nav_Notification:
+                fragmentManager.beginTransaction().replace(R.id.flContainer,
+                        new NotificationFragment()).commit();
+                break;
+            case R.id.nav_NotificationNew:
                 fragmentManager.beginTransaction().replace(R.id.flContainer,
                         new NotificationFragment()).commit();
                 break;
@@ -167,6 +181,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Glide.with(this).load(currentUser.getParseFile("icon").getUrl())
                 .transform(new CenterInside(), new RoundedCorners(1000)).into(navUserIcon);
 
+    }
+
+    public void queryNotification(Menu menu){
+        ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
+        query.whereEqualTo(Friend.KEY_RECEIVER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Friend.KEY_STATUS, -1);
+        query.addDescendingOrder(Friend.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Friend>() {
+            @Override
+            public void done(List<Friend> friends, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with getting Notification", e);
+                    return;
+                }
+                for(Friend friend: friends){
+                    Log.i(TAG, "Friend:" + friend.getSender() +", Status2 :"+ friend.getStatus());
+                }
+                if (friends.size() > 0){
+                    notification = true;
+                }
+                if(notification){
+                    menu.findItem(R.id.nav_Notification).setVisible(false);
+                }
+                else{
+                    menu.findItem(R.id.nav_NotificationNew).setVisible(false);
+                }
+            }
+        });
     }
 }
 
