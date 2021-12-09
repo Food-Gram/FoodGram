@@ -87,11 +87,11 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
    -[x] Click on other's username jump to view other's profile
 -[x] Users third page
    -[x] Compose, including images, description
-* Normal User fourth page
+-[x] Normal User fourth page
    -[x] Show the list of friends, in a recyclerview
-   * Each item in recyclerview contains the user’s headshot, username, and the last message sent.
-   * Items are ordered chronologically.
-   * On the top bar of the page, shows the number of unread messages. 
+   -[x] Each item in recyclerview contains the user’s headshot, username, and the last message sent.
+   -[x] Can search and add user
+   -[x] Chat page for sending text message with friends
 -[x] Normal User fifth page (User’s own profile)
     - [x] Shows the user’s headshot icon and username, total number of posts made, number of food stores followed, and number of friends added.
     - [x] Show a grid view of the most recent nine photos
@@ -115,11 +115,11 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     -[x] Click on other's username jump to view other's profile
 -[x] Food Store third page
     -[x] Compose, including images, description
-* Food Store User fourth page
+-[x] Food Store User fourth page
     -[x] Show the list of friends, in a recyclerview
-    * Each item in recyclerview contains the user’s headshot, username, and the last message sent.
-    * Items are ordered chronologically.
-    * On the top bar of the page, shows the number of unread messages.
+    -[x] Each item in recyclerview contains the user’s headshot, username, and the last message sent.
+    -[x] Can search and add user
+    -[x] Chat page for sending text message with friends
 -[x]  Food Store User fourth page (own profile)
     - [x] Shows the user’s headshot icon and username, total number of posts made, number of followers, and number of friends added.
     - [x] Show menu in recyclerview contains food image, food name, price
