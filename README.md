@@ -66,6 +66,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ### 2. Screen Archetypes
 
 **All Users:**
+
 - [x] Login
 - [x] Register - User signs up or logs into their account
    -[x] Upon Download/Reopening of the application, the user is prompted to log in to gain access to their profile information to be properly matched with another person.
@@ -75,24 +76,24 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     
     
 **Normal Users:**
--[x] Normal User Main page (view friend's posts)
-   -[x] Show all friend’s posts chronologically. 
-   -[x] Each post has the user’s headshot, food picture, and some words.
-   -[x] Each post has details on comments and likes
-   -[x] Click on other's username jump to view other's profile
--[x] Normal User Second page (view followed food store posts)
-   -[x] Show followed food store posts chronologically. 
-   -[x] Each post has the user’s headshot, food picture, created time and some words.
-   -[x]  Each post has details on comments and likes
-   -[x] Click on other's username jump to view other's profile
--[x] Users third page
-   -[x] Compose, including images, description
--[x] Normal User fourth page
-   -[x] Show the list of friends, in a recyclerview
-   -[x] Each item in recyclerview contains the user’s headshot, username, and the last message sent.
-   -[x] Can search and add user
-   -[x] Chat page for sending text message with friends
--[x] Normal User fifth page (User’s own profile)
+- [x] Normal User Main page (view friend's posts)
+   - [x] Show all friend’s posts chronologically. 
+   - [x] Each post has the user’s headshot, food picture, and some words.
+   - [x] Each post has details on comments and likes
+   - [x] Click on other's username jump to view other's profile
+- [x] Normal User Second page (view followed food store posts)
+   - [x] Show followed food store posts chronologically. 
+   - [x] Each post has the user’s headshot, food picture, created time and some words.
+   - [x]  Each post has details on comments and likes
+   - [x] Click on other's username jump to view other's profile
+- [x] Users third page
+   - [x] Compose, including images, description
+- [x] Normal User fourth page
+   - [x] Show the list of friends, in a recyclerview
+   - [x] Each item in recyclerview contains the user’s headshot, username, and the last message sent.
+   - [x] Can search and add user
+   - [x] Chat page for sending text message with friends
+- [x] Normal User fifth page (User’s own profile)
     - [x] Shows the user’s headshot icon and username, total number of posts made, number of food stores followed, and number of friends added.
     - [x] Show a grid view of the most recent nine photos
     - [x] Show all posts from the past in recyclerview contain posted time, description.Tap on these posts to show a detailed view.
@@ -103,24 +104,24 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
 **Food Store Users:**
--[x] Food Store User main page (view followed food store posts)
-    -[x] Show followed food store posts chronologically. 
-    -[x] Each post has the user’s headshot, food picture, created time and some words.
-    -[x] Each post has details on comments and likes
-    -[x] Click on other's username jump to view other's profile
--[x] Food Store User second page (view friend's posts)
-    -[x] Show all friend’s posts chronologically. 
-    -[x] Each post has the user’s headshot, food picture, and some words.
-    -[x] Each post has details on comments and likes
-    -[x] Click on other's username jump to view other's profile
--[x] Food Store third page
-    -[x] Compose, including images, description
--[x] Food Store User fourth page
-    -[x] Show the list of friends, in a recyclerview
-    -[x] Each item in recyclerview contains the user’s headshot, username, and the last message sent.
-    -[x] Can search and add user
-    -[x] Chat page for sending text message with friends
--[x]  Food Store User fourth page (own profile)
+- [x] Food Store User main page (view followed food store posts)
+    - [x] Show followed food store posts chronologically. 
+    - [x] Each post has the user’s headshot, food picture, created time and some words.
+    - [x] Each post has details on comments and likes
+    - [x] Click on other's username jump to view other's profile
+- [x] Food Store User second page (view friend's posts)
+    - [x] Show all friend’s posts chronologically. 
+    - [x] Each post has the user’s headshot, food picture, and some words.
+    - [x] Each post has details on comments and likes
+    - [x] Click on other's username jump to view other's profile
+- [x] Food Store third page
+    - [x] Compose, including images, description
+- [x] Food Store User fourth page
+    - [x] Show the list of friends, in a recyclerview
+    - [x] Each item in recyclerview contains the user’s headshot, username, and the last message sent.
+    - [x] Can search and add user
+    - [x] Chat page for sending text message with friends
+- [x]  Food Store User fourth page (own profile)
     - [x] Shows the user’s headshot icon and username, total number of posts made, number of followers, and number of friends added.
     - [x] Show menu in recyclerview contains food image, food name, price
     - [x] Show all posts from the past in recyclerview contain posted time, description. Tap on these posts to show a detailed view.
