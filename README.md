@@ -59,7 +59,7 @@ When food lovers can't find friends or family members to try food with, they can
 
 Here's a walkthrough of implemented user stories:
 
-<img src='walkthrough3.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='final walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
