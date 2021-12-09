@@ -81,7 +81,7 @@ public class ChatFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, tvSearchName.getText().toString() + "      1231231231313123123 123123");
+                Log.i(TAG, tvSearchName.getText().toString());
                 Intent i = new Intent(getContext(), DetailActivity_searchUser.class);
                 i.putExtra("name", tvSearchName.getText().toString()); //pass the input user ID
                 startActivity(i);

@@ -30,14 +30,11 @@ public class ChatMsg extends ParseObject {
     }
 
 
-
     public String getContent() {
         return getString(KEY_CONTENT);
     }
 
-//    public String getCreatedAt() {
-//        return getString(KEY_CREATED);
-//    }
+
 
 
 

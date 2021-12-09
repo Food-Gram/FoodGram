@@ -67,7 +67,7 @@ public class DetailActivity_Chat extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!tvMsgInput.getText().toString().isEmpty()){
-                    Log.i(TAG, tvMsgInput.getText().toString() + "      1231231231313123123 123123");
+                    Log.i(TAG, tvMsgInput.getText().toString());
                     SendMessage(tvMsgInput.getText().toString());
                     tvMsgInput.setText("");
                     adapter.notifyDataSetChanged();
