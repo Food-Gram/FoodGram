@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:layout_toEndOf="@+id/ivFriendIcon"
         android:fontFamily="@font/actor"
@@ -43,6 +43,36 @@
         android:layout_below="@+id/ivFriendIcon"
         android:layout_marginTop="7dp"
         android:background="?android:attr/listDivider"></View>
+
+    <TextView
+        android:id="@+id/tvChatTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="41dp"
+        android:layout_toEndOf="@+id/ivFriendIcon"
+        android:text="Last msg :" />
+
+    <TextView
+        android:id="@+id/chatLastMsg"
+        android:layout_width="210dp"
+        android:layout_height="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="2dp"
+        android:layout_toEndOf="@+id/textView11" />
 
 
 </RelativeLayout>

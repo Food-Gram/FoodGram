@@ -1,7 +1,6 @@
 package com.codepath.foodgram.adapters;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 
 
 public class MessageListAdapter extends RecyclerView.Adapter{
@@ -158,14 +158,8 @@ public class MessageListAdapter extends RecyclerView.Adapter{
 
             // Format the stored timestamp into a readable String using method.
             //timeText.setText(Utils.formatDateTime(message.getCreatedAt()));
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            timeText.setText(message.getCreatedAt().toString());
-                        }
-                    }, 1000);
-            //timeText.setText(message.getCreatedAt().toString());
+
+            timeText.setText(message.getUpdatedAt().toString());
 
 
         }
