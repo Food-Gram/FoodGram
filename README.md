@@ -30,7 +30,7 @@ When food lovers can't find friends or family members to try food with, they can
 
 **Required Must-have Stories**
 
-* Users sign up as a normal user or a food store （Two types of user）.
+- [x] Users sign up as a normal user or a food store （Two types of user）.
 - [x] Normal User logs in to access friend list, previous chats, and list of following food stores.
 - [x] Normal User follow what they are interested in.
 - [x] Users who are friends have a chat window to communicate.
