@@ -70,6 +70,13 @@ public class DetailActivity_Chat extends AppCompatActivity {
                     Log.i(TAG, tvMsgInput.getText().toString() + "      1231231231313123123 123123");
                     SendMessage(tvMsgInput.getText().toString());
                     tvMsgInput.setText("");
+//                    Handler handler = new Handler();
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            adapter.notifyDataSetChanged();
+//                        }
+//                    }, 500);
                     adapter.notifyDataSetChanged();
                 }
 
