@@ -1,5 +1,11 @@
 # FoodGram
 
+## Narrated App Demo
+
+[![FoodGram Narrated Demo](http://img.youtube.com/vi/tI271LDUpLU/0.jpg)](http://www.youtube.com/watch?v=tI271LDUpLU)
+
+[YouTube Link](https://youtu.be/tI271LDUpLU)
+
 ## Table of Contents
 1. [Overview](#Overview)
 1. [Product Spec](#Product-Spec)
